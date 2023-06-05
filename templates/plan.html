@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+      <style type="text/css">.turbo-progress-bar {
+         position: fixed;
+         display: block;
+         top: 0;
+         left: 0;
+         height: 3px;
+         background: #0076ff;
+         z-index: 2147483647;
+         transition:
+         width 300ms ease-out,
+         opacity 150ms 150ms ease-in;
+         transform: translate3d(0, 0, 0);
+         }
+      </style>
+      <title>DesignAi - Plans</title>
+      <meta name="description" content="Home Interior | Design On Demand">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+
+
+  <link rel="stylesheet" href="/static/application-9aee6fc370ad0735fa57b3716443db63a17d820a370441d01f767a2b5ca9f999.css" data-turbo-track="reload">
+  <script src="/static/script.js">
+  </script>
+  <script>window.dataLayer = window.dataLayer || [];function gtag(){dataLayer.push(arguments);} gtag('js', new Date());gtag('config', 'G-7KCKZGZRDH');</script><script src="./static/script.js"></script><script>window.dataLayer = window.dataLayer || [];function gtag(){dataLayer.push(arguments);} gtag('js', new Date());gtag('config', 'G-7KCKZGZRDH');</script>
+
+  <style type="text/css" id="tts-styles">
+   [data-tts-block-id].tts-active {background: rgba(206, 225, 255, 0.9) !important;}
+   [data-tts-sentence-id].tts-active {background: rgba(0, 89, 191, 0.7) !important;}
+</style>
+  <script src="/static/stripe.js">
+  </script>
+  <script src="https:/js.stripe.com/v3/">
+  </script>
+
+   </head>
+   <body>
+      <header>
+ <!--navbar start-->
+<nav class="navbar navbar-light nav-site navbar-expand-md fixed-top navigation-clean">
+   <div class="container position-relative">
+   <a href="/login">
+   <img style="width: 48px;padding-right: 10px;" src="/static/logo3.png">
+   </a>
+
+   <a class="navbar-brand d-md-none d-lg-block fs-4 fancy-font" href="#about" style="letter-spacing: 1px;" translate="no">Design<span class="text-primary">AI</span></a>
+
+   <button data-bs-toggle="collapse" class="navbar-toggler" data-bs-target="#navcol-1">
+ <span class="visually-hidden">Toggle navigation</span>
+   <span class="navbar-toggler-icon"></span>
+   </button>
+
+   <div class="collapse navbar-collapse" id="navcol-1">
+   <ul class="navbar-nav ms-auto">
+   <li class="nav-item" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Home">
+   <a class="nav-link text-uppercase " href="/">Home</a>
+   </li>
+   <li class="nav-item" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Pricing">
+   <a class="nav-link text-uppercase " href="./plan.html">Pricing</a>
+   </li>
+   <li class="nav-item" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Blog">
+   <a class="nav-link text-uppercase " href="/#about" ,="" data-turbo="false" {}="">Blog</a>
+   </li>
+   <li class="nav-item" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Sign up">
+   <a class="nav-link text-uppercase active" href="./register" ,="" data-turbo="false" {}="">Sign up</a>
+   </li>
+   <li class="nav-item" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Login">
+     <a class="nav-link text-uppercase active" href="./login" ,="" data-turbo="false" {}="">Login</a>
+     </li>
+   </ul>
+   </div>
+   </div>
+   </nav>
+   <!--nav bar end-->
+      </header>
+      <main>
+         <div class="container">
+            <turbo-frame id="plan_frequency" src="/plans" complete="">
+               <div class="row d-flex align-items-center" style="margin-top: 60px;">
+                  <div class="col-md-12 text-center w-100 p-0">
+                     <div class="row mb-4 p-0">
+                        <div class="col-md-12">
+                           <h1 class="text-primary">Select your plan</h1>
+                        </div>
+                        <div class="col-md-12 d-flex justify-content-center align-items-center fs-5">
+                           <div class="me-2 text-black">
+                              Monthly
+                           </div>
+                           <div class="form-check form-switch">
+                              <a href="TODO">
+                              <input class="form-check-input bg-dark" type="checkbox" role="switch" id="flexSwitchCheckChecked" checked="">
+                              </a>
+                              <label class="form-check-label text-primary" for="flexSwitchCheckChecked">Annually</label>
+                           </div>
+                        </div>
+                        <div class="col-md-12 text-center text-muted">
+                           Save <span class="text-primary fw-bold">32%</span> on the Annual plan
+                        </div>
+                     </div>
+                     <div class="row w-100 p-0 m-0 mb-4">
+                        <div class="col-md-4 mb-4">
+                           <div class="card text-center">
+                              <div class="card-header fs-3 text-dark">
+                                 Premium
+                              </div>
+                              <div class="card-body">
+                                 <h5 class="card-title text-dark fancy-font my-4" style="font-size: 56px;">$10<span class="fs-5 standard-font">/ 50 credits</span></h5>
+
+<form action="/subscription" method="POST" id="payment-form">
+   <input type="hidden" name="plan" value="premium">
+   <a href="https://buy.stripe.com/test_aEUaH59y32PKdOg001" class="btn btn-dark btn-lg w-100" target="_blank">Premium</a>
+</form>
+
+<script>
+   // Create a Stripe client.
+   var stripe = Stripe('pk_test_51N9xMaKc5T0FpXgLB2BikdJtstSXc5pWUj86T2OyXow4RT4Afs89uSPbnShsw05mcg1G2bj8FUNGX2cXXMaJYvVO00o9YgXOto');
+
+   // Create an instance of Elements.
+   var elements = stripe.elements();
+
+   // Create an instance of the card Element.
+   var card = elements.create('card');
+
+   // Add an instance of the card Element into the `card-element` <div>.
+   card.mount('#card-element');
+
+   var form = document.getElementById('payment-form');
+   form.addEventListener('submit', function(event) {
+     event.preventDefault();
+
+     stripe.createToken(card).then(function(result) {
+       if (result.error) {
+         // Inform the user if there was an error.
+         var errorElement = document.getElementById('card-errors');
+         errorElement.textContent = result.error.message;
+       } else {
+         // Send the token to your server.
+         stripeTokenHandler(result.token);
+       }
+     });
+   });
+
+   function stripeTokenHandler(token) {
+     // Insert the token ID into the form so it gets submitted to the server
+     var form = document.getElementById('payment-form');
+     var hiddenInput = document.createElement('input');
+     hiddenInput.setAttribute('type', 'hidden');
+     hiddenInput.setAttribute('name', 'stripeToken');
+     hiddenInput.setAttribute('value', token.id);
+     form.appendChild(hiddenInput);
+
+     // Submit the form
+     form.submit();
+   }
+ </script>
+
+
+                                 <p class="text-start fw-bold mt-4">Premium:</p>
+                                 <ul class="list-group list-group-flush text-start">
+                                    <li class="list-group-item">
+                                       <strong>50</strong> AI Generated Spaces
+                                    </li>
+                                    <li class="list-group-item">
+                                       Access to over 8 design styles
+                                    </li>
+                                    <li class="list-group-item">
+                                       Access to over 8 room types
+                                    </li>
+                                    <li class="list-group-item">
+                                       Premium support &amp; feature request
+                                    </li>
+                                 </ul>
+                              </div>
+                              <div class="card-footer">
+                                 <strong class="text-dark">Annual charge of $120</strong>
+                              </div>
+                           </div>
+                        </div>
+
+<div class="col-md-4 mb-4">
+<div class="card text-center">
+<div class="card-header fs-3 text-primary">
+Pro
+</div>
+<div class="card-body">
+<h5 class="card-title text-primary fancy-font my-4" style="font-size: 56px;">$4<span class="fs-5 standard-font">/ 20 credits</span></h5>
+
+
+<form class="button_to" method="POST">
+   <input type="hidden" name="plan" value="pro">
+   <a href="https://buy.stripe.com/test_cN28yX25Bbmg11u7ss" class="btn btn-primary btn-lg w-100" target="_blank">Go Pro</a>
+</form>
+
+
+
+<p class="text-start fw-bold mt-4">Upgrade Credits:</p>
+<ul class="list-group list-group-flush text-start">
+                                    <li class="list-group-item">
+                                       <strong>20</strong> AI Generated Spaces
+                                    </li>
+                                    <li class="list-group-item">
+                                       Access to over 8 design styles
+                                    </li>
+                                    <li class="list-group-item">
+                                       Access to over 8 room types
+                                    </li>
+                                 </ul>
+                              </div>
+
+                              <div class="card-footer">
+                                 One-time payment
+                              </div>
+                           </div>
+                        </div>
+                        <div class="col-md-4 mb-4">
+                           <div class="card text-center">
+                              <div class="card-header fs-3 text-primary">
+                                 Free
+                              </div>
+                              <div class="card-body">
+                                 <h5 class="card-title text-primary fancy-font my-4" style="font-size: 56px;">$0</h5>
+                                 <a class="btn btn-outline-dark btn-lg w-100" data-turbo="false" href="/register">Sign up for Free</a>
+                                 <p class="text-start fw-bold mt-4">Get Started for Free:</p>
+                                 <ul class="list-group list-group-flush text-start">
+                                    <li class="list-group-item">
+                                       <strong>5</strong> AI Generated Spaces
+                                    </li>
+                                    <li class="list-group-item">
+                                       Access to over 8 design styles
+                                    </li>
+                                    <li class="list-group-item">
+                                       Access to over 8 room types
+                                    </li>
+                                 </ul>
+                              </div>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+            </turbo-frame>
+         </div>
+      </main>
+   </body>
+</html>
