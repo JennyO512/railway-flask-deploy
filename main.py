@@ -14,12 +14,17 @@ UPLOAD_FOLDER = 'uploaded_images'
 #total_credits = 5
 #used_credits = 0
 
+#this is my start
 @app.route("/", methods=['GET'])
 def index():
     return render_template('index.html')
 
+
+#this is the upload to folder global variable
 uploaded_filename = ""
 
+
+#this is the route that takes input from the users camera
 @app.route('/upload_image', methods=['POST'])
 def upload_image():
     global uploaded_filename
@@ -31,6 +36,7 @@ def upload_image():
         f.write(base64.b64decode(image_data.split(',')[1]))
     return jsonify({'message': 'Image uploaded successfully'}), 200
 
+#this is the dashboard route
 @app.route("/dashboard", methods=['GET', 'POST'])
 def dashboard():
     if request.method == 'POST':
@@ -58,9 +64,53 @@ def dashboard():
 
     return render_template('dashboard.html')
  
+ #this route uploads the picture to the uploaded folder 
 @app.route('/uploads/<filename>')
 def display_image(filename):
     return send_from_directory(UPLOAD_FOLDER, filename)    
+
+#this is the route to get paid, it does to the plan.html file
+@app.route('/subscription', methods=['GET', 'POST'])
+def subscribe():
+    if request.method == 'POST':
+        # Get the email and payment token from the form
+        email = request.form['email']
+        token = request.form['stripeToken']
+        plan = request.form.get('plan', 'pro')  # default to 'pro' if no plan is specified
+
+        # Create a new customer in Stripe
+        customer = stripe.Customer.create(
+            email=email,
+            source=token
+        )
+
+        # Depending on the plan, set the price ID and credit allocation
+        if plan == 'premium':
+            price_id = 'prod_Nvp3GfvoJl1LiD'
+            total_credits = 50
+        else:
+            price_id = 'prod_Nvp2Sttg35Wp87'
+            total_credits = 20
+
+        # Create a subscription for the customer with your product
+        subscription = stripe.Subscription.create(
+            customer=customer.id,
+            items=[
+                {
+                    'price': price_id
+                }
+            ],
+        )
+
+        if subscription.status == 'active':
+            flash("A total of {} credits have been updated to your account!".format(plan))
+
+    return render_template('plan.html')
+
+
+
+
+
     
 if __name__ == '__main__':
   app.run(port=5000)
