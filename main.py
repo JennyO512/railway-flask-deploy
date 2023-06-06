@@ -168,7 +168,7 @@ def login():
 
 # LOGOUT USER
 @ app.route("/logout")
-@ login_required
+#@ login_required
 def logout():
     logout_user()
     flash('User logged out successfully.')
