@@ -1,5 +1,9 @@
 from flask import Flask, render_template, request, jsonify, send_from_directory,url_for
 from datetime import datetime
+from werkzeug.security import generate_password_hash, check_password_hash
+from flask_sqlalchemy import SQLAlchemy
+from flask_login import LoginManager, UserMixin, login_user, login_required, logout_user
+from sqlalchemy.exc import IntegrityError
 import os
 import base64
 from picture_api import replicate_api_function
@@ -7,17 +11,35 @@ from picture_api import replicate_api_function
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'super_secret_key'
 
+# Set up SQLAlchemy
+app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URL')
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+db = SQLAlchemy(app)
+
+# Set up Flask-Login
+login_manager = LoginManager()
+login_manager.init_app(app)
+login_manager.login_view = 'login'
+
+# Define user model
+class User(db.Model, UserMixin):
+    id = db.Column(db.Integer, primary_key=True)
+    email = db.Column(db.String(255), unique=True, nullable=False)
+    password = db.Column(db.String(255), nullable=False)
+    total_credits = db.Column(db.Integer, default=5)
+    used_credits = db.Column(db.Integer, default=0) 
+
 # Set the upload folder path
 UPLOAD_FOLDER = 'uploaded_images'
 
 # total credits, to be used globally
-#total_credits = 5
-#used_credits = 0
+total_credits = 5
+used_credits = 0
 
 # Tell Flask-Login how to load the user from the ID
-#@login_manager.user_loader
-#def load_user(user_id):
-#    return User.query.get(int(user_id)) 
+@login_manager.user_loader
+def load_user(user_id):
+    return User.query.get(int(user_id)) 
 
 
 #this is my start
