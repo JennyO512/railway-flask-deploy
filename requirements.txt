@@ -5,6 +5,7 @@ Flask-WTF
 Flask
 flask-sqlalchemy
 Flask-SQLAlchemy
+SQLAlchemy
 Flask-Login
 Flask-LoginManager
 Flask-Jsonpify
