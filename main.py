@@ -14,6 +14,12 @@ UPLOAD_FOLDER = 'uploaded_images'
 #total_credits = 5
 #used_credits = 0
 
+# Tell Flask-Login how to load the user from the ID
+@login_manager.user_loader
+def load_user(user_id):
+    return User.query.get(int(user_id)) 
+
+
 #this is my start
 @app.route("/", methods=['GET'])
 def index():
@@ -107,8 +113,66 @@ def subscribe():
 
     return render_template('plan.html')
 
+# REGISTER USER
+@ app.route("/register", methods=['GET', 'POST'])
+def register():
+    if request.method == 'POST':
+        print(request.form)
+        email = request.form['email']
+        password1 = request.form['password1']
+        password2 = request.form['password2']
+
+        # hash and salt password
+        hashed_password = generate_password_hash(
+            password1, method='sha256', salt_length=8)
+
+        new_user = User(email=email, password=hashed_password)
+
+        if len(password1) < 7:
+            flash('Password must be at least 7 characters.')
+        elif password1 != password2:
+            flash('Passwords do not match.')
+        else:
+            try:
+                db.session.add(new_user)
+                db.session.commit()
+                # login new user
+                login_user(new_user)
+                flash('Account created successfully. 5 credits added.')
+                return redirect(url_for('dashboard'))
+            except IntegrityError:
+                flash(
+                    'User with that email already exists. Please log in instead.')
+                return redirect(url_for('login'))
+    return render_template('register.html')
+
+# LOGIN USER
+@ app.route("/login", methods=['GET', 'POST'])
+def login():
+    if request.method == 'POST':
+        email = request.form['email']
+        password = request.form['password']
+        user = User.query.filter_by(email=email).first()
+        if user:
+            if check_password_hash(user.password, password):
+                login_user(user)
+                flash('Logged in successfully.')
+                return redirect(url_for('dashboard'))
+            else:
+                flash('Password is incorrect, please try again.')
+        else:
+            flash('User does not exist. Please register instead.')
+            return redirect(url_for('register'))
+    return render_template('login.html')
 
 
+# LOGOUT USER
+@ app.route("/logout")
+@ login_required
+def logout():
+    logout_user()
+    flash('User logged out successfully.')
+    return redirect(url_for('login'))
 
 
     
