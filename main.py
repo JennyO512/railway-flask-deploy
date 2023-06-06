@@ -12,6 +12,7 @@ app = Flask(__name__)
 app.config['SECRET_KEY'] = 'super_secret_key'
 
 # Set up SQLAlchemy
+DB_NAME = 'users.db'
 app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URL')
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
@@ -22,8 +23,7 @@ login_manager.init_app(app)
 login_manager.login_view = 'login'
 
 # Define user model
-class User(db.Model, UserMixin):
-    __tablename__ = 'users'  # This line was added    
+class User(db.Model, UserMixin):    
     id = db.Column(db.Integer, primary_key=True)
     email = db.Column(db.String(255), unique=True, nullable=False)
     password = db.Column(db.String(255), nullable=False)
@@ -43,12 +43,10 @@ used_credits = 0
 def load_user(user_id):
     return User.query.get(int(user_id)) 
 
-
 #this is my start
 @app.route("/", methods=['GET'])
 def index():
     return render_template('index.html')
-
 
 #this is the upload to folder global variable
 uploaded_filename = ""
