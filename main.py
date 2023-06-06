@@ -15,9 +15,9 @@ UPLOAD_FOLDER = 'uploaded_images'
 #used_credits = 0
 
 # Tell Flask-Login how to load the user from the ID
-@login_manager.user_loader
-def load_user(user_id):
-    return User.query.get(int(user_id)) 
+#@login_manager.user_loader
+#def load_user(user_id):
+#    return User.query.get(int(user_id)) 
 
 
 #this is my start
