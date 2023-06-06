@@ -12,7 +12,6 @@ app = Flask(__name__)
 app.config['SECRET_KEY'] = 'super_secret_key'
 
 # Set up SQLAlchemy
-DB_NAME = 'users.db'
 app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URL')
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
@@ -22,6 +21,7 @@ login_manager = LoginManager()
 login_manager.init_app(app)
 login_manager.login_view = 'login'
 
+
 # Define user model
 class User(db.Model, UserMixin): 
     id = db.Column(db.Integer, primary_key=True)
@@ -30,6 +30,11 @@ class User(db.Model, UserMixin):
     total_credits = db.Column(db.Integer, default=5)
     used_credits = db.Column(db.Integer, default=0) 
     
+# Tell Flask-Login how to load the user from the ID
+@login_manager.user_loader
+def load_user(user_id):
+    return User.query.get(int(user_id)) 
+ 
 
 # Set the upload folder path
 UPLOAD_FOLDER = 'uploaded_images'
@@ -38,11 +43,6 @@ UPLOAD_FOLDER = 'uploaded_images'
 total_credits = 5
 used_credits = 0
 
-# Tell Flask-Login how to load the user from the ID
-@login_manager.user_loader
-def load_user(user_id):
-    return User.query.get(int(user_id)) 
-
 #this is my start
 @app.route("/", methods=['GET'])
 def index():
@@ -50,7 +50,6 @@ def index():
 
 #this is the upload to folder global variable
 uploaded_filename = ""
-
 
 #this is the route that takes input from the users camera
 @app.route('/upload_image', methods=['POST'])
@@ -198,4 +197,6 @@ def logout():
 
     
 if __name__ == '__main__':
+    with app.app_context():
+        db.create_all()
   app.run(port=5000)
