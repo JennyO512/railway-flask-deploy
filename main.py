@@ -45,12 +45,12 @@ login_manager.login_view = 'login'
 
 
 # Define user model
-class User(db.Model, UserMixin): 
-    id = db.Column(db.Integer, primary_key=True)
-    email = db.Column(db.String(255), unique=True, nullable=False)
-    password = db.Column(db.String(255), nullable=False)
-    total_credits = db.Column(db.Integer, default=5)
-    used_credits = db.Column(db.Integer, default=0) 
+#class User(db.Model, UserMixin): 
+#    id = db.Column(db.Integer, primary_key=True)
+#    email = db.Column(db.String(255), unique=True, nullable=False)
+#    password = db.Column(db.String(255), nullable=False)
+#    total_credits = db.Column(db.Integer, default=5)
+#    used_credits = db.Column(db.Integer, default=0) 
     
 # Tell Flask-Login how to load the user from the ID
 @login_manager.user_loader
