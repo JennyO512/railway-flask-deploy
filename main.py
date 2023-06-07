@@ -5,6 +5,7 @@ from flask_login import LoginManager, UserMixin, login_user, login_required, log
 from sqlalchemy.exc import IntegrityError
 import os
 import base64
+import psycopg2
 from picture_api import replicate_api_function
 
 app = Flask(__name__)
