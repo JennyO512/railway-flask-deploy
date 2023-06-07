@@ -1,7 +1,6 @@
 from flask import Flask, render_template, request, jsonify, send_from_directory,url_for
 from datetime import datetime
 from werkzeug.security import generate_password_hash, check_password_hash
-from Flask-SQLAlchemy import SQLAlchemy
 from flask_login import LoginManager, UserMixin, login_user, login_required, logout_user
 from sqlalchemy.exc import IntegrityError
 import os
@@ -12,9 +11,31 @@ app = Flask(__name__)
 app.config['SECRET_KEY'] = 'super_secret_key'
 
 # Set up SQLAlchemy
-app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URL')
-app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-db = SQLAlchemy(app)
+#app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URL')
+#app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+#db = SQLAlchemy(app)
+
+
+# Get the connection string from the environment variable
+connection_string = os.getenv('DATABASE_URL')
+
+# Connect to the PostgreSQL database
+conn = psycopg2.connect(connection_string)
+
+# Create a cursor object
+cur = conn.cursor()
+
+# Execute SQL commands to retrieve the current time and version from PostgreSQL
+cur.execute('SELECT NOW();')
+time = cur.fetchone()[0]
+
+cur.execute('SELECT version();')
+version = cur.fetchone()[0]
+
+# Close the cursor and connection
+cur.close()
+conn.close()
+
 
 # Set up Flask-Login
 login_manager = LoginManager()
