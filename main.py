@@ -11,6 +11,9 @@ from picture_api import replicate_api_function
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'super_secret_key'
 
+# Create an intense of the LoginManager class
+login_manager = LoginManager()
+login_manager.init_app(app)
 
 # Get the connection string from the environment variable
 connection_string = os.getenv('DATABASE_URL')
