@@ -11,11 +11,6 @@ from picture_api import replicate_api_function
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'super_secret_key'
 
-# Set up SQLAlchemy
-#app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URL')
-#app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-#db = SQLAlchemy(app)
-
 
 # Get the connection string from the environment variable
 connection_string = os.getenv('DATABASE_URL')
@@ -26,36 +21,55 @@ conn = psycopg2.connect(connection_string)
 # Create a cursor object
 cur = conn.cursor()
 
-# Execute SQL commands to retrieve the current time and version from PostgreSQL
-cur.execute('SELECT NOW();')
-time = cur.fetchone()[0]
+# Execute a simple query
+cur.execute("SELECT * FROM users;")
 
-cur.execute('SELECT version();')
-version = cur.fetchone()[0]
+# Fetch all the rows
+rows = cur.fetchall()
 
-# Close the cursor and connection
-cur.close()
+for row in rows:
+    print(row)
+
+# Don't forget to close the connection
 conn.close()
 
 
 # Set up Flask-Login
-login_manager = LoginManager()
-login_manager.init_app(app)
-login_manager.login_view = 'login'
+#login_manager = LoginManager()
+#login_manager.init_app(app)
+#login_manager.login_view = 'login'
 
-
-# Define user model
-#class User(db.Model, UserMixin): 
-#    id = db.Column(db.Integer, primary_key=True)
-#    email = db.Column(db.String(255), unique=True, nullable=False)
-#    password = db.Column(db.String(255), nullable=False)
-#    total_credits = db.Column(db.Integer, default=5)
-#    used_credits = db.Column(db.Integer, default=0) 
     
 # Tell Flask-Login how to load the user from the ID
 @login_manager.user_loader
 def load_user(user_id):
-    return User.query.get(int(user_id)) 
+    conn = psycopg2.connect(conn_string)
+    cur = conn.cursor()
+
+    cur.execute("SELECT * FROM users WHERE id = %s;", (user_id,))
+    user_data = cur.fetchone()
+
+    conn.close()
+
+    if user_data is None:
+        return None
+
+    # Assuming the User class has a constructor that accepts all the fields in the same order they're in the database
+    return User(*user_data)
+ 
+ 
+class User:
+    def __init__(self, id, email, password, total_credits, used_credits):
+        self.id = id
+        self.email = email
+        self.password = password
+        self.total_credits = total_credits
+        self.used_credits = used_credits
+
+    def get_id(self):
+        return str(self.id)  # Flask-Login requires this to be a string
+
+    # TODO Add any other methods required by Flask-Login here (is_authenticated, is_active, is_anonymous)
  
 
 # Set the upload folder path
