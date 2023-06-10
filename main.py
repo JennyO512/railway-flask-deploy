@@ -62,7 +62,7 @@ def load_user(user_id):
     return User(*user_data)
  
  
-class User:
+class User(UserMixin):
     def __init__(self, id, email, password, total_credits, used_credits):
         self.id = id
         self.email = email
@@ -72,6 +72,12 @@ class User:
 
     def get_id(self):
         return str(self.id)  # Flask-Login requires this to be a string
+    
+        def is_active(self):
+        return True  # You can implement your own logic here if needed
+
+    def is_authenticated(self):
+        return True  # You can implement your own logic here if needed
 
     # TODO Add any other methods required by Flask-Login here (is_authenticated, is_active, is_anonymous)
  
