@@ -52,7 +52,7 @@ def load_user(user_id):
     conn = psycopg2.connect(connection_string)
     cur = conn.cursor()
 
-    cur.execute("SELECT * FROM users WHERE id = %s;", (user_id,))
+    cur.execute("SELECT * FROM users WHERE id = %s;", (int(user_id),))
     user_data = cur.fetchone()
 
     conn.close()
