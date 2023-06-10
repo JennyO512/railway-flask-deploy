@@ -266,14 +266,19 @@ def register():
  #               return redirect(url_for('login'))
  #   return render_template('register.html')
 
+
 # LOGIN USER
-@ app.route("/login", methods=['GET', 'POST'])
+@app.route("/login", methods=['GET', 'POST'])
 def login():
     if request.method == 'POST':
         email = request.form['email']
         password = request.form['password']
-        user = User.query.filter_by(email=email).first()
-        if user:
+
+        cur.execute("SELECT * FROM users WHERE email = %s;", (email,))
+        user_data = cur.fetchone()
+
+        if user_data:
+            user = User(*user_data)
             if check_password_hash(user.password, password):
                 login_user(user)
                 flash('Logged in successfully.')
@@ -283,7 +288,29 @@ def login():
         else:
             flash('User does not exist. Please register instead.')
             return redirect(url_for('register'))
+
     return render_template('login.html')
+
+
+
+# LOGIN USER
+#@ app.route("/login", methods=['GET', 'POST'])
+#def login():
+#    if request.method == 'POST':
+#        email = request.form['email']
+#        password = request.form['password']
+#        user = User.query.filter_by(email=email).first()
+#        if user:
+#            if check_password_hash(user.password, password):
+#                login_user(user)
+#                flash('Logged in successfully.')
+#                return redirect(url_for('dashboard'))
+#            else:
+#                flash('Password is incorrect, please try again.')
+#        else:
+#            flash('User does not exist. Please register instead.')
+#            return redirect(url_for('register'))
+#    return render_template('login.html')
 
 
 # LOGOUT USER
