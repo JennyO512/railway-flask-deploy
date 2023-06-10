@@ -73,7 +73,7 @@ class User(UserMixin):
     def get_id(self):
         return str(self.id)  # Flask-Login requires this to be a string
     
-        def is_active(self):
+    def is_active(self):
         return True  # You can implement your own logic here if needed
 
     def is_authenticated(self):
