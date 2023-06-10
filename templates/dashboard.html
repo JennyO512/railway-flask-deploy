@@ -41,16 +41,7 @@
       [data-tts-sentence-id].tts-active {background: rgba(0, 89, 191, 0.7) !important;}
     </style>
   
-      <script>
-  // JavaScript code
-  navigator.mediaDevices.getUserMedia({ video: { facingMode: 'environment' } })
-    .then(function (stream) {
-      // Handle the stream and capture the video frames
-    })
-    .catch(function (error) {
-      // Handle the error
-    });
-</script>
+  
       
       
   </head>
@@ -337,5 +328,50 @@
 
     </main>
     <script src="/static/dashboard.js"></script>
+    <script>
+    // Get access to the camera and display the video stream
+    const startButton = document.getElementById('start');
+    const video = document.getElementById('video');
+    const canvas = document.getElementById('canvas');
+    const captureButton = document.getElementById('capture');
+    const hiddenImageInput = document.getElementById('hiddenImageInput');
+
+    // Check if the browser supports getUserMedia
+    if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
+        startButton.addEventListener('click', function() {
+            // Request permission to access the camera
+            navigator.mediaDevices.getUserMedia({ video: true })
+                .then(function(stream) {
+                    // Display the video stream in the video element
+                    video.srcObject = stream;
+                    video.style.display = 'block';
+                    captureButton.style.display = 'block';
+                    startButton.style.display = 'none';
+                })
+                .catch(function(error) {
+                    console.error('Error accessing the camera:', error);
+                });
+        });
+
+        captureButton.addEventListener('click', function() {
+            // Capture the current video frame and convert it to an image
+            canvas.getContext('2d').drawImage(video, 0, 0, canvas.width, canvas.height);
+            const imageDataURL = canvas.toDataURL('image/png');
+
+            // Set the captured image data in the hidden input field
+            hiddenImageInput.value = imageDataURL;
+
+            // Stop the video stream and hide the video element
+            video.srcObject.getTracks().forEach(function(track) {
+                track.stop();
+            });
+            video.style.display = 'none';
+            captureButton.style.display = 'none';
+            startButton.style.display = 'block';
+        });
+    } else {
+        console.error('getUserMedia is not supported by this browser.');
+    }
+</script>
   </body>
 </html>
