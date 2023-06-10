@@ -53,29 +53,3 @@ function captureImageFromVideo(video, canvas) {
       alert('Sorry, your browser does not support the MediaDevices API');
     }
   });
-// Check if the browser supports getUserMedia
-if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
-  // Constraints for accessing the camera
-  var constraints = {
-    video: {
-      facingMode: { exact: "environment" } // Specify rear-facing camera
-    }
-  };
-
-  // Access the camera stream
-  navigator.mediaDevices.getUserMedia(constraints)
-    .then(function(stream) {
-      // Handle the camera stream here
-      // For example, display the video stream in a <video> element
-      var videoElement = document.getElementById('video');
-      videoElement.srcObject = stream;
-    })
-    .catch(function(error) {
-      // Handle any errors that occur during camera access
-      console.error('Error accessing camera:', error);
-    });
-} else {
-  // Browser doesn't support getUserMedia
-  console.error('getUserMedia is not supported in this browser.');
-}
-
