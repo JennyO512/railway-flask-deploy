@@ -7,6 +7,7 @@ import os
 import base64
 from picture_api import replicate_api_function
 import psycopg2
+from app import db  # Import the db object
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'super_secret_key'
