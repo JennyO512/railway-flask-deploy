@@ -266,6 +266,9 @@ def register():
  #               return redirect(url_for('login'))
  #   return render_template('register.html')
 
+# Connect to the PostgreSQL database
+conn = psycopg2.connect(connection_string)
+cur = conn.cursor()
 
 # LOGIN USER
 @app.route("/login", methods=['GET', 'POST'])
