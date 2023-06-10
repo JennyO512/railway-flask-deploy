@@ -20,6 +20,7 @@ login_manager.init_app(app)
 
 # Get the connection string from the environment variable
 connection_string = os.getenv('DATABASE_URL')
+print("Connection String: " + connection_string)
 
 # Connect to the PostgreSQL database
 conn = psycopg2.connect(connection_string)
