@@ -20,26 +20,6 @@ login_manager.init_app(app)
 
 # Get the connection string from the environment variable
 connection_string = os.getenv('DATABASE_URL')
-print("Connection String: " + connection_string)
-
-# Connect to the PostgreSQL database
-conn = psycopg2.connect(connection_string)
-
-# Create a cursor object
-cur = conn.cursor()
-
-# Execute a simple query
-cur.execute("SELECT * FROM users;")
-
-# Fetch all the rows
-rows = cur.fetchall()
-
-for row in rows:
-    print(row)
-
-# Don't forget to close the connection
-conn.close()
-
 
 # Set up Flask-Login
 #login_manager = LoginManager()
@@ -267,16 +247,16 @@ def register():
  #               return redirect(url_for('login'))
  #   return render_template('register.html')
 
-# Connect to the PostgreSQL database
-conn = psycopg2.connect(connection_string)
-cur = conn.cursor()
-
 # LOGIN USER
 @app.route("/login", methods=['GET', 'POST'])
 def login():
     if request.method == 'POST':
         email = request.form['email']
         password = request.form['password']
+        
+        # Connect to the PostgreSQL database
+        conn = psycopg2.connect(connection_string)
+        cur = conn.cursor()
 
         cur.execute("SELECT * FROM users WHERE email = %s;", (email,))
         user_data = cur.fetchone()
