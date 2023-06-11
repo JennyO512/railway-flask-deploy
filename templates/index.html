@@ -2,29 +2,18 @@
  <html lang="en">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-  <style type="text/css">.turbo-progress-bar {
-  position: fixed;
-  display: block;
-  top: 0;
-  left: 0;
-  height: 3px;
-  background: #0076ff;
-  z-index: 2147483647;
-  transition:
-    width 300ms ease-out,
-    opacity 150ms 150ms ease-in;
-  transform: translate3d(0, 0, 0);
-}
-</style>
+  
     <title>DesignAi</title>
     <meta name="description" content="Home Interior | Design On Demand">
-    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
 
 
 <link rel="stylesheet" href="/static/application-9aee6fc370ad0735fa57b3716443db63a17d820a370441d01f767a2b5ca9f999.css" data-turbo-track="reload">
-<script src="/static/script.js">
-</script>
+<script src="/static/script.js"></script>
 <script src="./static/script.js"></script>
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
 
 <style type="text/css" id="tts-styles">[data-tts-block-id].tts-active {background: rgba(206, 225, 255, 0.9) !important;} [data-tts-sentence-id].tts-active {background: rgba(0, 89, 191, 0.7) !important;}</style>
@@ -43,11 +32,6 @@
 
   <a class="navbar-brand d-md-none d-lg-block fs-4 fancy-font" href="#about" style="letter-spacing: 1px;" translate="no">Design<span class="text-primary">AI</span></a>
 
-  <button data-bs-toggle="collapse" class="navbar-toggler" data-bs-target="#navcol-1">
-<span class="visually-hidden">Toggle navigation</span>
-  <span class="navbar-toggler-icon"></span>
-  </button>
-
   <div class="collapse navbar-collapse" id="navcol-1">
   <ul class="navbar-nav ms-auto">
   <li class="nav-item" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Home">
@@ -57,18 +41,25 @@
   <a class="nav-link text-uppercase " href="/subscription">Pricing</a>
   </li>
   <li class="nav-item" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Blog">
-  <a class="nav-link text-uppercase " href="/#about" ,="" data-turbo="false" {}="">Blog</a>
+  <a class="nav-link text-uppercase " href="/#about">Blog</a>
   </li>
   <li class="nav-item" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Sign up">
-  <a class="nav-link text-uppercase active" href="./register" ,="" data-turbo="false" {}="">Sign up</a>
+  <a class="nav-link text-uppercase active" href="./register">Sign up</a>
   </li>
   <li class="nav-item" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Login">
-    <a class="nav-link text-uppercase active" href="./login" ,="" data-turbo="false" {}="">Login</a>
+    <a class="nav-link text-uppercase active" href="./login">Login</a>
     </li>
   </ul>
   </div>
   </div>
   </nav>
+ <div id="navDemo" class="w3-bar-block w3-black w3-hide w3-hide-large w3-hide-medium w3-top" style="margin-top:46px">
+  <a href="#band" class="w3-bar-item w3-button w3-padding-large" onclick="myFunction()">Credits</a>
+  <a href="#tour" class="w3-bar-item w3-button w3-padding-large" onclick="myFunction()">About</a>
+  <a href="#contact" class="w3-bar-item w3-button w3-padding-large" onclick="myFunction()">Sign-up</a>
+  <a href="#" class="w3-bar-item w3-button w3-padding-large" onclick="myFunction()">Login</a>
+</div>
+ 
   <!--nav bar end-->
   </header>
 
@@ -188,6 +179,24 @@
         index++;
       }, 2000); // change image every 2 seconds
     });
+     // Used to toggle the menu on small screens when clicking on the menu button
+function myFunction() {
+  var x = document.getElementById("navDemo");
+  if (x.className.indexOf("w3-show") == -1) {
+    x.className += " w3-show";
+  } else { 
+    x.className = x.className.replace(" w3-show", "");
+  }
+}
+
+// When the user clicks anywhere outside of the modal, close it
+var modal = document.getElementById('ticketModal');
+window.onclick = function(event) {
+  if (event.target == modal) {
+    modal.style.display = "none";
+  }
+}
+</script>
   </script>
 
   <footer class="py-3 my-4">
