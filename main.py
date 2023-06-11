@@ -185,6 +185,9 @@ def register():
             flash('Passwords do not match.')
         else:
             try:
+                # Set total_credits to 5
+                new_user.total_credits = 5            
+
                 # Connect to the PostgreSQL database
                 conn = psycopg2.connect(connection_string)
                 cur = conn.cursor()
