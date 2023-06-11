@@ -11,16 +11,13 @@
 <link rel="stylesheet" href="/static/application-9aee6fc370ad0735fa57b3716443db63a17d820a370441d01f767a2b5ca9f999.css" data-turbo-track="reload">
 <script src="/static/script.js"></script>
 <script src="./static/script.js"></script>
-<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
 
 <style type="text/css" id="tts-styles">[data-tts-block-id].tts-active {background: rgba(206, 225, 255, 0.9) !important;} [data-tts-sentence-id].tts-active {background: rgba(0, 89, 191, 0.7) !important;}</style>
 <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
-
 </head>
-  <body>
+  
+ <body>
 
 <header>
 <!--navbar start-->
@@ -53,11 +50,13 @@
   </div>
   </div>
   </nav>
- <div id="navDemo" class="w3-bar-block w3-black w3-hide w3-hide-large w3-hide-medium w3-top" style="margin-top:46px">
-  <a href="#band" class="w3-bar-item w3-button w3-padding-large" onclick="myFunction()">Credits</a>
-  <a href="#tour" class="w3-bar-item w3-button w3-padding-large" onclick="myFunction()">About</a>
-  <a href="#contact" class="w3-bar-item w3-button w3-padding-large" onclick="myFunction()">Sign-up</a>
-  <a href="#" class="w3-bar-item w3-button w3-padding-large" onclick="myFunction()">Login</a>
+<div id="navDemo" class="collapse navbar-collapse" style="margin-top:46px">
+  <div class="navbar-nav">
+    <a href="/subscription" class="nav-item nav-link" data-toggle="collapse" data-target="#navDemo">Credits</a>
+    <a href="#about" class="nav-item nav-link" data-toggle="collapse" data-target="#navDemo">About</a>
+    <a href="/register" class="nav-item nav-link" data-toggle="collapse" data-target="#navDemo">Sign-up</a>
+    <a href="/login" class="nav-item nav-link" data-toggle="collapse" data-target="#navDemo">Login</a>
+  </div>
 </div>
  
   <!--nav bar end-->
@@ -179,6 +178,7 @@
         index++;
       }, 2000); // change image every 2 seconds
     });
+     
      // Used to toggle the menu on small screens when clicking on the menu button
 function myFunction() {
   var x = document.getElementById("navDemo");
@@ -197,7 +197,6 @@ window.onclick = function(event) {
   }
 }
 </script>
-  </script>
 
   <footer class="py-3 my-4">
     <p class="text-center text-muted">© 2023 DesignAi | <a href="#about">About</a> | <a href="/login">Affiliate Program</a> |<a href="mailto:designai@gmail.com?subject=I%20have%20a%20question...">designai@gmail.com</a></p>
