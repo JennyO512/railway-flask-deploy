@@ -96,6 +96,15 @@ def upload_image():
 #this is the dashboard route
 @app.route("/dashboard", methods=['GET', 'POST'])
 def dashboard():
+    
+    # Manage User Credits
+    insufficient_credits = False
+    # total purchased credits (default=5 when user registers)
+    total_credits = current_user.total_credits
+    used_credits = current_user.used_credits
+    user_credits = total_credits - used_credits
+    
+    
     if request.method == 'POST':
         room_input = request.form['room'].title()
         style_input = request.form['room-style'].title()
