@@ -96,24 +96,14 @@ def upload_image():
 #this is the dashboard route
 @app.route("/dashboard", methods=['GET', 'POST'])
 def dashboard():
-    # Manage User Credits
-    insufficient_credits = False
-    # total purchased credits (default=5 when user registers)
-    total_credits = current_user.total_credits
-    used_credits = current_user.used_credits
-    user_credits = total_credits - used_credits   
-    
     if request.method == 'POST':
         room_input = request.form['room'].title()
         style_input = request.form['room-style'].title()
 
         if request.form['hiddenImageInput']:
             filename = uploaded_filename
-            # handle user image input (camera upload)
             print('Uploaded Filename:', filename)
         elif request.files['file']:
-            # handle user image input (file upload) if no camera upload
-            # timestamp for image uploads
             timestamp = datetime.now().strftime('%Y%m%d%H%M%S')
             file = request.files['file']
             filename = file.filename
@@ -121,31 +111,9 @@ def dashboard():
             file.save(os.path.join(UPLOAD_FOLDER, filename))
             print('Uploaded Filename:', filename)
             uploaded_image = url_for('static', filename=f"{UPLOAD_FOLDER}/{filename}")
-            
-            # check if user has enough credits to use the API
-            #this was the previous code when I was using te SQLite db..I'm not sure how to update this db.session. like this
-            #on line 138, ,i need to open a new connection like DAN said and update the users credits, then close it again. 
-    """    if user_credits > 0:
-            # Use Replicate API
-            output = replicate_api_function(
-                room_input, style_input, f'{UPLOAD_FOLDER}/{filename}')  # pass in user prompt and image path
 
-            # print and return the ouput from the API<THIS RETURNS THE JSON TO THE TERMAL WINDOW>
-            # print('API OUTPUT:', output)
-
-            if output:
-                print('API OUTPUT:', output)
-                # update user credits (each api call uses 1 credit)
-                current_user.used_credits += 1
-                db.session.commit()
-                user_credits = current_user.total_credits - current_user.used_credits
-                # render template with output image
-                return render_template('dashboard.html', api_output=True, output_image_link=output[1], original_image_name=filename, user_input=[room_input, style_input], total_credits=total_credits, user_credits=user_credits, insufficient_credits=insufficient_credits)
-        else:
-            insufficient_credits = True """
-
-       api_token = os.getenv('REPLICATE_API_TOKEN')
-       output = replicate_api_function(room_input, style_input, f'{UPLOAD_FOLDER}/{filename}')
+        api_token = os.getenv('REPLICATE_API_TOKEN')
+        output = replicate_api_function(room_input, style_input, f'{UPLOAD_FOLDER}/{filename}')
 
         if output:
             print('API OUTPUT:', output)
