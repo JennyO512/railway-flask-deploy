@@ -144,8 +144,8 @@ def dashboard():
         else:
             insufficient_credits = True """
 
-        api_token = os.getenv('REPLICATE_API_TOKEN')
-        output = replicate_api_function(room_input, style_input, f'{UPLOAD_FOLDER}/{filename}')
+       api_token = os.getenv('REPLICATE_API_TOKEN')
+       output = replicate_api_function(room_input, style_input, f'{UPLOAD_FOLDER}/{filename}')
 
         if output:
             print('API OUTPUT:', output)
