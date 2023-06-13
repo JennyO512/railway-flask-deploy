@@ -221,8 +221,6 @@
 
 </div>
 
-
-
     <hr>
     <div class="steps-container">
         <div class="form-select">
@@ -230,7 +228,7 @@
             <div>
             <h2 style="color: purple; padding:5px">Before</h2>
                 <div>
-                    <img style="padding:15px" src="https://replicate.delivery/pbxt/kjhLPxXfo2U9RqJ9jqqDFG4TgP9nfA5Vg3TjzqxYRS8p8lFRA/output_1.png" alt="before-img" width="500">
+                    <img style="padding:15px" src="{{ url_for('display_image', filename=original_image_name) }}" alt="before-img" width="500">
                 </div>
             </div>
             
@@ -238,38 +236,37 @@
     <div class="col-6 col-s-9">
         <div style="padding:15px">
             <h3 style="margin-bottom: 10px">Your Picture</h3>
-                <p><strong>Room Type:</strong> Kitchen</p>
-                <p style="margin-top: -1.5%;"><strong>Style:</strong> Professional</p>
+                <p><strong>Room Type:</strong> {{ user_input[0] }}</p>
+                <p style="margin-top: -1.5%;"><strong >Style:</strong> {{ user_input[1] }}</p>
         </div>
     </div>
     
     
-                <!--beginning of after pic-->
+  <!--beginning of after pic-->
     <div>
         <h2>After</h2>
-            <img style="padding:15px" src="{{ url_for('display_image', filename=original_image_name) }}" alt="after-img" width="500">
+            <img style="padding:15px" src="{{output_image_link}}" alt="after-img" width="500">
     </div>
     </div>
 </div>
 <div>
         <br>
         <p>DOWNLOAD LINK</p>
-        <a href="https://replicate.delivery/pbxt/kjhLPxXfo2U9RqJ9jqqDFG4TgP9nfA5Vg3TjzqxYRS8p8lFRA/output_1.png" download="output_image.png" class="btn btn-secondary mt-2" target="_blank">Download Image</a>
+        <a href="{{output_image_link}}" download="output_image.png" class="btn btn-secondary mt-2" target="_blank">Download Image</a>
         </div>
 </div>
-</div>
-    
+</div>    
 
 <!--end of updated code 5.21-->
-
   <!-- Step 4: Submit -->
   
-              <!-- input to store the uploaded image data -->
-          <div class="img-container">
+ <!-- input to store the uploaded image data -->
+<div class="img-container">
 <input type="hidden" id="hiddenImageInput" name="hiddenImageInput">
-          </div>
-          <br>
-          <h6 id="check-image-text" style="display: none">Click 'Retake Picture' to Take The Picture Again or 'Submit' To Proceed</h6>
+ </div>
+    
+ <br>
+ <h6 id="check-image-text" style="display: none">Click 'Retake Picture' to Take The Picture Again or 'Submit' To Proceed</h6>
          
 
 </div>
