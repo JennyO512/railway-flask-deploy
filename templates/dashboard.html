@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
+<head>
     <style type="text/css">.turbo-progress-bar {
       position: fixed;
       display: block;
@@ -14,11 +14,63 @@
       opacity 150ms 150ms ease-in;
       transform: translate3d(0, 0, 0);
       }
+      
+    * {
+    box-sizing: border-box;
+    }
+    
+    img {
+        max-width: 100%;
+        height: auto;
+        }
+    .row:after {
+  content: "";
+  clear: both;
+  display: table;
+}
+
+[class*="col-"] {
+  float: left;
+  padding: 15px;
+  width: 100%;
+}
+
+@media only screen and (min-width: 600px) {
+  .col-s-1 {width: 8.33%;}
+  .col-s-2 {width: 16.66%;}
+  .col-s-3 {width: 25%;}
+  .col-s-4 {width: 33.33%;}
+  .col-s-5 {width: 41.66%;}
+  .col-s-6 {width: 50%;}
+  .col-s-7 {width: 58.33%;}
+  .col-s-8 {width: 66.66%;}
+  .col-s-9 {width: 75%;}
+  .col-s-10 {width: 83.33%;}
+  .col-s-11 {width: 91.66%;}
+  .col-s-12 {width: 100%;}
+}
+
+@media only screen and (min-width: 768px) {
+  .col-1 {width: 8.33%;}
+  .col-2 {width: 16.66%;}
+  .col-3 {width: 25%;}
+  .col-4 {width: 33.33%;}
+  .col-5 {width: 41.66%;}
+  .col-6 {width: 50%;}
+  .col-7 {width: 58.33%;}
+  .col-8 {width: 66.66%;}
+  .col-9 {width: 75%;}
+  .col-10 {width: 83.33%;}
+  .col-11 {width: 91.66%;}
+  .col-12 {width: 100%;}
+}
+  
 
     </style>
+
     <title>Dashboard - Account Dashboard</title>
     <meta name="description" content="Home Interior | Design On Demand">
-    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
     <meta name="turbo:authenticated" content="true">
 
 
@@ -44,9 +96,13 @@
   
       
       
+  <script id="VisualSPOnlineHelpAppScript_jQuery" src="chrome-extension://ohdihpdgfenligmhnmldmiabdhflokkh/lib/jquery/jquery-1.10.2.min.js?Version=2023.5.25.1&amp;ExtVersion=2.0.53.0" async="" type="text/javascript"></script><link id="VisualSPOnlineHelpAppCSS_VisualSPCore" href="chrome-extension://ohdihpdgfenligmhnmldmiabdhflokkh/lib/host/css/visualsp-host-core.min.css?Version=2023.5.25.1&amp;ExtVersion=2.0.53.0" rel="stylesheet" type="text/css"><script id="VisualSPOnlineHelpAppScript_Main" src="chrome-extension://ohdihpdgfenligmhnmldmiabdhflokkh/js/VisualSPHost.js?Extension=Chrome&amp;Version=2023.5.25.1&amp;ExtVersion=2.0.53.0" async="" type="text/javascript"></script><script id="VisualSPOnlineHelpAppScript_VisualSPHostCore" src="chrome-extension://ohdihpdgfenligmhnmldmiabdhflokkh/lib/host/js/VisualSPHostCore.min.js?Version=2023.5.25.1&amp;ExtVersion=2.0.53.0" async="" type="text/javascript">  </script>
+  
+
+  
   </head>
 
-  <body style="background-color:lightgrey;">
+  <body style="background-color: lightgrey;">
 
     <header>
         <!--navbar start-->
@@ -87,18 +143,13 @@
           <!--nav bar end-->
     </header>
     <!-- flash message -->
-    {% with messages = get_flashed_messages() %} {% if messages %} {% for
-    message in messages %}
-    <p>{{ message }}</p>
-    {% endfor %} {% endif %} {% endwith %}
-
+      
     <div>
-
-
-      <main>
-        <div class="container">
-            <form action="/dashboard" method="POST" enctype="multipart/form-data">
-                <div class="steps-container">
+<main>
+ <div class="container">
+   <form action="/dashboard" method="POST" enctype="multipart/form-data">
+     <div class="steps-container">
+         
                     <!-- Step 1: Choose an image -->
                     <div class="form-select">
                         <h3>Step 1: Choose an image</h3>
@@ -107,11 +158,11 @@
                         <br><br>
 
                         <button class="nav-link-primary" type="button" id="start">Take Picture</button>
-                        <video style="display: none" id="video" autoplay playsinline></video>
+                        <video style="display: none" id="video" autoplay="" playsinline=""></video>
                         <canvas style="display: none" id="canvas" width="640" height="480"></canvas>
                         <button class="nav-link-primary" style="display: none" type="button" id="capture"><i class="fa-solid fa-camera"></i></button>
                         <div class="img-container">
-                            <input type="hidden" id="hiddenImageInput" name="hiddenImageInput" />
+                            <input type="hidden" id="hiddenImageInput" name="hiddenImageInput">
                         </div>
                     </div>
 <br>
@@ -167,128 +218,68 @@
     <br>
     <h6 id="check-image-text" style="display: none">Click 'Retake Picture' to Take The Picture Again or 'Submit' To Proceed</h6>
     <br>
-<!--     {% if insufficient_credits %}
-        <br>
-        <h4 style="color: red">You do not have enough credits.</h4>
-    {% endif %} -->
+
 </div>
-<br>
-<br>
-{% if api_output %}
+
+
+
     <hr>
     <div class="steps-container">
         <div class="form-select">
             <div class="img-output-container" style="display: flex; justify-content: space-between;">
+            <div>
+            <h2 style="color: purple; padding:5px">Before</h2>
                 <div>
-                    <h2 style="color: purple; padding:5px">Before</h2>
-                    <div>
-                        <img style="padding:15px" src="{{ url_for('display_image', filename=original_image_name) }}" alt="before-img" width="500">
-                    </div>
-                </div>
-                <div class="steps-container">
-                    <div style="padding:15px">
-                        <h3 style="margin-bottom: 10px">Your Picture</h3>
-                        <p><strong>Room Type:</strong> {{ user_input[0] }}</p>
-                        <p style="margin-top: -1.5%;"><strong >Style:</strong> {{ user_input[1] }}</p>
-                    </div>
-                </div>
-                <div>
-                    <h2>After</h2>
-                    <img style="padding:15px" src="{{output_image_link}}" alt="after-img" width="500">
-                    <br>
-                    <a href="{{output_image_link}}" download="output_image.png" class="btn btn-secondary mt-2" target="_blank">Download Image</a>
+                    <img style="padding:15px" src="https://replicate.delivery/pbxt/kjhLPxXfo2U9RqJ9jqqDFG4TgP9nfA5Vg3TjzqxYRS8p8lFRA/output_1.png" alt="before-img" width="500">
                 </div>
             </div>
+            
+     <!--this is the middle section with user selections -->       
+    <div class="col-6 col-s-9">
+        <div style="padding:15px">
+            <h3 style="margin-bottom: 10px">Your Picture</h3>
+                <p><strong>Room Type:</strong> Kitchen</p>
+                <p style="margin-top: -1.5%;"><strong>Style:</strong> Professional</p>
         </div>
     </div>
-{% endif %}
+    
+    
+                <!--beginning of after pic-->
+    <div>
+        <h2>After</h2>
+            <img style="padding:15px" src="https://replicate.delivery/pbxt/kjhLPxXfo2U9RqJ9jqqDFG4TgP9nfA5Vg3TjzqxYRS8p8lFRA/output_1.png" alt="after-img" width="500">
+    </div>
+    </div>
+</div>
+<div>
+        <br>
+        <p>DOWNLOAD LINK</p>
+        <a href="https://replicate.delivery/pbxt/kjhLPxXfo2U9RqJ9jqqDFG4TgP9nfA5Vg3TjzqxYRS8p8lFRA/output_1.png" download="output_image.png" class="btn btn-secondary mt-2" target="_blank">Download Image</a>
+        </div>
+</div>
+</div>
+    
 
 <!--end of updated code 5.21-->
 
-
   <!-- Step 4: Submit -->
-  <!-- <div class="form-select">
-    <h3>Step 4: Submit</h3>
-    <button class="nav-link-primary" type="submit" id="submit">Submit</button>
-
-        <input type="file" id="fileInput" name="file" accept="image/*">
-        <br>
-        <br>
-
-
-<button class="nav-link-primary" type="button" id="start">Take Picture</button>
-        <video style="display: none" id="video" autoplay playsinline></video>
-        <canvas
-          style="display: none"
-          id="canvas"
-          width="640"
-          height="480"
-        ></canvas>
-        <button class="nav-link-primary" style="display: none" type="button" id="capture">
-          <i class="fa-solid fa-camera"></i>
-        </button>
-        <div class="clearfix">
+  
               <!-- input to store the uploaded image data -->
           <div class="img-container">
-<input type="hidden" id="hiddenImageInput" name="hiddenImageInput" />
+<input type="hidden" id="hiddenImageInput" name="hiddenImageInput">
           </div>
-
           <br>
           <h6 id="check-image-text" style="display: none">Click 'Retake Picture' to Take The Picture Again or 'Submit' To Proceed</h6>
-          <br> 
-<!--button class="nav-link-primary" type="submit" id="submit">Submit</button-->
-<br>
+         
 
-          <!-- handle insuffient credit case -->
- <!--          {% if insufficient_credits %}
-            <br>
-            <h4 style="color: red">You do not have enough credits.</h4>
-          {% endif %}
-
-          {% if api_output %}
-          </div>
-            <br>
-            <hr>
-            <div class="steps-container">
-            <div class="form-select">
-            <div class="img-output-container" style="display: flex; justify-content: space-between;">
-              <div>
-                <h2>Before</h2>
-                <div>
-                  <img style="padding:15px" src="{{ url_for('display_image', filename=original_image_name) }}" alt="before-img" width="500">
-                </div>
-              </div> -->
-
-<br>
-
-              <!-- Display user input -->
-      <!--         <div class="steps-container">
-             <div style="padding:15px">
-                <h3 style="margin-bottom: 10px">Your Picture</h3>
-                <p><strong>Room Type:</strong> {{ user_input[0] }}</p>
-                <p style="margin-top: -1.5%;"><strong >Style:</strong> {{ user_input[1] }}</p>
-              </div>
-
-              </div>
-
-<br>
-              <div>
-                <h2>After</h2>
-                <img style="padding:15px" src="{{output_image_link}}" alt="after-img" width="500">
-                <br>
-                <a href="{{output_image_link}}" download="output_image.png" class="btn btn-secondary mt-2" target="_blank">Download Image</a>
-              </div>
-            </div>
-          {% endif %} -->
-        </form>
 </div>
 <br>
-<br>
+
 <!-- Credits Section -->
 
  <div style="display: flex">
-  <p style="margin-right: auto">Credits Purchased: {{ total_credits }}</p>
-  <p style="margin-left: auto">Credits Remaining: {{ user_credits }}</p>
+  <p style="margin-right: auto">Credits Purchased: </p>
+  <p style="margin-left: auto">Credits Remaining: </p>
 </div> 
 <div style="display: flex">
   <a style="margin-left: auto" href="/dashboard" class="btn btn-primary">Credits</a>
@@ -297,7 +288,7 @@
 
 <hr>
 <br>
-</div>
+</div></form>
 
 
 
@@ -308,16 +299,7 @@
   <p class="w3-text-blue-grey w3-large"><b>Created in Austin, Tx</b></p>
   <p>Feel free to contact by email designai@gmail.com, or you can send us a message here: <a href="mailto:designai%20Support<jennybenavides81@gmail.com>" class="link-footer">Contact</a></p>
 
-  <!--form action="/action_page" target="_blank">
-<!--     <p><input class="w3-input w3-border" type="text" placeholder="Name" required name="Name"></p>
-    <p><input class="w3-input w3-border" type="text" placeholder="Email" required name="Email"></p>
-    <p><input class="w3-input w3-border" type="text" placeholder="Subject" required name="Subject"></p>
-    <p><input class="w3-input w3-border" type="text" placeholder="Message" required name="Message"></p>
-    <p>
-      <button class="w3-button w3-black" type="submit">
-        <i class="fa fa-paper-plane"></i> SEND MESSAGE
-      </button> 
-  </form-->
+
 
 </div>
 </div>
@@ -374,5 +356,5 @@
         console.error('getUserMedia is not supported by this browser.');
     }
 </script>
-  </body>
-</html>
+  
+</div></body></html>
