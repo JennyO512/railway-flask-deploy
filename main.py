@@ -309,6 +309,40 @@ def login():
 #    return render_template('login.html')
 
 
+@app.route('/webhook', methods=['POST'])
+def stripe_webhook():
+    payload = request.get_data(as_text=True)
+    sig_header = request.headers.get('Stripe-Signature')
+    event = None
+
+    try:
+        event = stripe.Webhook.construct_event(
+            payload, sig_header, app.config['STRIPE_WEBHOOK_SECRET']
+        )
+    except ValueError as e:
+        # Invalid payload
+        return 'Invalid payload', 400
+    except stripe.error.SignatureVerificationError as e:
+        # Invalid signature
+        return 'Invalid signature', 400
+
+    # Handle the checkout.session.completed event
+    if event['type'] == 'checkout.session.completed':
+        session = event['data']['object']
+        customer_email = session['customer_email']
+        # For simplicity, we assume that the user's email in our database is the same as the customer's email in Stripe
+
+        # Fetch the user from the database
+        user = User.query.filter_by(email=customer_email).first()
+        if user:
+            # Update user's credits
+            user.total_credits += 10  # Update this based on the actual number of credits bought
+            db.session.commit()
+
+    return '', 200
+    
+
+
 # LOGOUT USER
 @ app.route("/logout")
 #@ login_required
