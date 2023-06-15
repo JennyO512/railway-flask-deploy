@@ -379,5 +379,16 @@
         console.error('getUserMedia is not supported by this browser.');
     }
 </script>
+<script>
+    function openNavbar() {
+        var button = document.querySelector('.navbar-toggler'); 
+        //Trigger a click event
+        button.click();
+    }
+
+    document.addEventListener("DOMContentLoaded", function() {
+        openNavbar();
+    });
+</script>      
   </body>
 </html>
