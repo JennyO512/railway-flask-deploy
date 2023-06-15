@@ -53,9 +53,13 @@
 
   <body style="background-color:lightgrey;">
 
-    <header>
-        <!--navbar start-->
-        <nav class="navbar navbar-light nav-site navbar-expand-md fixed-top navigation-clean">
+<header>
+
+  
+<!--navbar start-->
+
+  
+<!--nav class="navbar navbar-light nav-site navbar-expand-md fixed-top navigation-clean">
           <div class="container position-relative">
           <a href="/">
           <img class="" style="width: 48px;padding-right: 10px;" src="/static/logo3.png">
@@ -64,10 +68,10 @@
 <button data-bs-toggle="collapse" class="navbar-toggler" data-bs-target="#navcol-1">
 <span class="visually-hidden">Toggle navigation</span>
 <span class="navbar-toggler-icon"></span>
-</button>
+</button-->
 
 
-          <div class="collapse navbar-collapse" id="navcol-1">
+          <!--div class="collapse navbar-collapse" id="navcol-1">
           <ul class="navbar-nav ms-auto">
           <li class="nav-item" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Home">
           <a class="nav-link text-uppercase " href="/">Home</a>
@@ -88,9 +92,38 @@
           </ul>
           </div>
           </div>
-          </nav>
-          <!--nav bar end-->
-    </header>
+        </nav-->
+<!--nav bar end-->
+  
+
+<nav class="navbar navbar-expand-md navbar-light bg-white fixed-top">
+      <a class="navbar-brand" href="/"><img class="mr-2" src="/static/logo3.png" width="48" alt="Logo">DesignAI</a>
+      
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ml-auto">
+          <li class="nav-item">
+            <a class="nav-link" href="/">Home</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/">Blog</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link active" href="/dashboard">Sign up</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link active" href="/dashboard">Login</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link active" href="/dashboard">Logout</a>
+          </li>
+        </ul>
+      </div>
+    </nav>
+  
+</header>
     <!-- flash message -->
     {% with messages = get_flashed_messages() %} {% if messages %} {% for
     message in messages %}
