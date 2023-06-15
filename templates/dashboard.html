@@ -96,7 +96,7 @@
 <!--nav bar end-->
   
 
-<nav class="navbar navbar-expand-md navbar-light bg-white fixed-top">
+<!--nav class="navbar navbar-expand-md navbar-light bg-white fixed-top">
       <a class="navbar-brand" href="/">
         <img style="width: 48px;padding-right: 10px;" src="/static/logo3.png" alt="Logo"></a>
     <a class="navbar-brand d-md-none d-lg-block fs-4 fancy-font" href="#about" style="letter-spacing: 1px;" translate="no">Design<span class="text-primary">AI</span></a>
@@ -104,8 +104,8 @@
       
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="navbarNav">
+      </button-->
+      <!--div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav ml-auto">
           <li class="nav-item">
             <a class="nav-link" href="/">Home</a>
@@ -124,8 +124,49 @@
           </li>
         </ul>
       </div>
-    </nav>
-  
+</nav-->
+<!-- that previous navbar looked awful -->
+
+<!-- trying again -->
+ <!--navbar start-->
+<nav class="navbar navbar-light nav-site navbar-expand-md fixed-top navigation-clean">
+   <div class="container position-relative">
+   <a href="/login">
+   <img style="width: 48px;padding-right: 10px;" src="/static/logo3.png">
+   </a>
+
+   <a class="navbar-brand d-md-none d-lg-block fs-4 fancy-font" href="#about" style="letter-spacing: 1px;" translate="no">Design<span class="text-primary">AI</span></a>
+
+   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button-->
+
+   <div class="collapse navbar-collapse" id="navbarNav">
+   <ul class="navbar-nav ms-auto">
+   <li class="nav-item" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Home">
+   <a class="nav-link text-uppercase " href="/">Home</a>
+   </li>
+   <li class="nav-item" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Pricing">
+   <a class="nav-link text-uppercase " href="./plan.html">Pricing</a>
+   </li>
+   <li class="nav-item" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Blog">
+   <a class="nav-link text-uppercase " href="/#about">Blog</a>
+   </li>
+   <li class="nav-item" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Sign up">
+   <a class="nav-link text-uppercase active" href="./register">Sign up</a>
+   </li>
+   <li class="nav-item" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Login">
+     <a class="nav-link text-uppercase active" href="./login">Login</a>
+     </li>
+   </ul>
+   </div>
+   </div>
+   </nav>
+   <!--nav bar end-->
+
+
+
+        
 </header>
     <!-- flash message -->
     {% with messages = get_flashed_messages() %} {% if messages %} {% for
