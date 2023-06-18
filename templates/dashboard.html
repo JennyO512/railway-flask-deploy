@@ -102,7 +102,7 @@
     <a class="navbar-brand d-md-none d-lg-block fs-4 fancy-font" href="#about" style="letter-spacing: 1px;" translate="no">Design<span class="text-primary">AI</span></a>
         <!--img class="mr-2" src="/static/logo3.png" width="48" alt="Logo">DesignAI</a-->
       
-      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <!--button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button-->
       <!--div class="collapse navbar-collapse" id="navbarNav">
@@ -267,6 +267,8 @@
                         <img style="padding:15px" src="{{ url_for('display_image', filename=original_image_name) }}" alt="before-img" width="500">
                     </div>
                 </div>
+                </div>
+                </div>
                 <div class="steps-container">
                     <div style="padding:15px">
                         <h3 style="margin-bottom: 10px">Your Picture</h3>
@@ -276,10 +278,13 @@
                 </div>
                 <div>
                     <h2>After</h2>
+                    <div>
                     <img style="padding:15px" src="{{output_image_link}}" alt="after-img" width="500">
-                    <br>
+                   </div>
+                     <br>
+                    </div>  
                     <a href="{{output_image_link}}" download="output_image.png" class="btn btn-secondary mt-2" target="_blank">Download Image</a>
-                </div>
+               
             </div>
         </div>
     </div>
