@@ -1,6 +1,5 @@
 from flask import Flask, render_template, request, jsonify, send_from_directory,url_for, redirect
 from flask import flash
-
 from datetime import datetime
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import LoginManager, UserMixin, login_user, login_required, logout_user
@@ -9,6 +8,7 @@ import os
 import base64
 from picture_api import replicate_api_function
 import psycopg2
+from psycopg2 import sql 
 
 
 app = Flask(__name__)
@@ -308,6 +308,32 @@ def login():
 #            return redirect(url_for('register'))
 #    return render_template('login.html')
 
+
+@app.route('/update_credits', methods=['POST'])
+@login_required
+def update_credits():
+    # Connect to the PostgreSQL database
+    conn = psycopg2.connect(connection_string)
+    cur = conn.cursor()
+
+    # Update the user's credits
+    cur.execute(
+        sql.SQL(
+            "UPDATE users SET total_credits = total_credits + 5 WHERE email = %s"
+        ),
+        [current_user.id]
+    )
+
+    # Commit the transaction
+    conn.commit()
+
+    # Close the connection
+    conn.close()
+
+    # Update the user's credits in the session
+    current_user.total_credits += 5
+
+    return jsonify({'status': 'success'})
 
 @app.route('/webhook', methods=['POST'])
 def stripe_webhook():
