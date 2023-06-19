@@ -185,6 +185,17 @@ btn {
       }, 2000); // change image every 2 seconds
     });
 </script>
+  <script>
+    function openNavbar() {
+        var button = document.querySelector('.navbar-toggler'); 
+        //Trigger a click event
+        button.click();
+    }
+
+    document.addEventListener("DOMContentLoaded", function() {
+        openNavbar();
+    });
+</script> 
 
   <footer class="py-3 my-4">
     <p class="text-center text-muted">© 2023 DesignAi | <a href="#about">About</a> | <a href="/login">Affiliate Program</a> |<a href="mailto:designai@gmail.com?subject=I%20have%20a%20question...">designai@gmail.com</a></p>
