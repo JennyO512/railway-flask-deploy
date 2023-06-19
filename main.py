@@ -223,7 +223,7 @@ def register():
                 flash('User with that email already exists. Please log in instead.')
                 return redirect(url_for('login'))
 
-    return render_template('login.html')
+    return render_template('register.html')
 
 
 # REGISTER USER
