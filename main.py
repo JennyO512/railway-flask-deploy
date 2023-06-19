@@ -2,7 +2,7 @@ from flask import Flask, render_template, request, jsonify, send_from_directory,
 from flask import flash
 from datetime import datetime
 from werkzeug.security import generate_password_hash, check_password_hash
-from flask_login import LoginManager, UserMixin, login_user, login_required, logout_user
+from flask_login import LoginManager, UserMixin, login_user, login_required, logout_user, current_user
 from sqlalchemy.exc import IntegrityError
 import os
 import base64
@@ -26,7 +26,23 @@ connection_string = os.getenv('DATABASE_URL')
 #login_manager.init_app(app)
 #login_manager.login_view = 'login'
 
-    
+@login_manager.user_loader
+def load_user(user_id):
+    conn = psycopg2.connect(connection_string)
+    cur = conn.cursor()
+
+    cur.execute("SELECT * FROM users WHERE id = %s", (user_id,))
+    user_data = cur.fetchone()
+
+    conn.close()
+
+    if user_data is None:
+        return None
+
+    # Assuming the User class has a constructor that accepts all the fields in the same order they're in the database
+    return User(*user_data)
+
+"""    
 # Tell Flask-Login how to load the user from the ID
 @login_manager.user_loader
 def load_user(user_id):
@@ -43,7 +59,7 @@ def load_user(user_id):
 
     # Assuming the User class has a constructor that accepts all the fields in the same order they're in the database
     return User(*user_data)
- 
+""" 
  
 class User(UserMixin):
     def __init__(self, id, email, password, total_credits, used_credits):
