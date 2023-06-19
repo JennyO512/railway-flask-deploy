@@ -378,7 +378,8 @@
   <p style="margin-left: auto">Credits Remaining: {{ user_credits }}</p>
 </div> 
 <div style="display: flex">
-  <a style="margin-left: auto" href="/dashboard" class="btn btn-primary">Credits</a>
+  <!--a style="margin-left: auto" href="/dashboard" class="btn btn-primary">Credits</a-->
+  <button id="update-credits">Update Credits</button>
 </div>
 </div>
 
@@ -472,5 +473,13 @@
         openNavbar();
     });
 </script>      
+<script>
+document.getElementById('update-credits').addEventListener('click', function() {
+    fetch('/update_credits', { method: 'POST' })
+    .then(response => response.json())
+    .then(data => console.log(data));
+});
+</script>
+
   </body>
 </html>
