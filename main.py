@@ -26,12 +26,13 @@ connection_string = os.getenv('DATABASE_URL')
 #login_manager.init_app(app)
 #login_manager.login_view = 'login'
 
+# Tell Flask-Login how to load the user from the ID
 @login_manager.user_loader
 def load_user(user_id):
     conn = psycopg2.connect(connection_string)
     cur = conn.cursor()
 
-    cur.execute("SELECT * FROM users WHERE id = %s", (user_id,))
+    cur.execute("SELECT * FROM users WHERE id = id", (user_id,))
     user_data = cur.fetchone()
 
     conn.close()
