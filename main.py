@@ -326,6 +326,7 @@ def login():
         user_data = cur.fetchone()
 
         if user_data:
+            user = User(*user_data)
             login_user(user, remember=True)
             if check_password_hash(user.password, password):
                 login_user(user)
