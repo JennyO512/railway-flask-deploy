@@ -370,10 +370,8 @@ def update_credits():
 
     # Update the user's credits
     cur.execute(
-        sql.SQL(
-            "UPDATE users SET total_credits = total_credits + 5 WHERE email = %s"
-        ),
-        [current_user.id]
+        "UPDATE users SET total_credits = total_credits + 5 WHERE id = %s",
+        (current_user.id,)
     )
 
     # Commit the transaction
@@ -386,6 +384,7 @@ def update_credits():
     current_user.total_credits += 5
 
     return jsonify({'status': 'success'})
+
 
 @app.route('/webhook', methods=['POST'])
 def stripe_webhook():
