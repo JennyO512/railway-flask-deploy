@@ -370,19 +370,32 @@
         </form>
 </div>
 <br>
-<br>
 <!-- Credits Section -->
 
  <div style="display: flex">
-<p style="margin-right: auto">Total Credits: {{ total_credits }}</p>
-<p style="margin-left: auto">Used Credits: {{ used_credits }}</p>
+  <p style="margin-right: auto">Total Credits: {{ total_credits }}</p>
+  <p style="margin-left: auto">Used Credits: {{ used_credits }}</p>
 </div> 
-<div style="display: flex">
-  <!--a style="margin-left: auto" href="/dashboard" class="btn btn-primary">Credits</a-->
-  <button id="update-credits">Update Credits</button>
-</div>
-</div>
 
+<!--UPDATE CREDITS -->
+
+<!-- REMOVE THIS BLOCK WHEN DONE TESTING -->
+  <div>
+      <!-- Button to Add 5 credits for TESTING -->
+    <button style="display: flex" class="nav-link-primary">
+      <a style="text-decoration: none; color: black;" href="{{ url_for('add_credit') }}">Click to add 5 Credits (For Testing)
+      </a>
+    </button>
+  </div>
+<!-- END OF BLOCK -->
+
+<-- ADD THIS BACK IN AFTER I'M DONE TESTING -->
+<!--div style="display: flex">
+  <a style="margin-left: auto" href="/dashboard" class="btn btn-primary">Credits</a>
+  <button id="update-credits">Update Credits</button>
+</div-->
+        
+</div>
 <hr>
 <br>
 </div>
