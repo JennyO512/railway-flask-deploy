@@ -127,7 +127,7 @@ def dashboard():
     # total purchased credits (default=5 when user registers)
     #total_credits = current_user.total_credits
     #used_credits = current_user.used_credits
-    #user_credits = total_credits - used_credits
+    user_credits = total_credits - used_credits
 
 
     if request.method == 'POST':
