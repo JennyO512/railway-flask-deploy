@@ -222,7 +222,20 @@ def subscribe():
         )
 
         if subscription.status == 'active':
-            flash("A total of {} credits have been updated to your account!".format(plan))
+
+            # newly added 6-22
+            # Update the user's total credits in your database
+            conn = psycopg2.connect(connection_string)
+            cur = conn.cursor()
+
+            cur.execute("UPDATE users SET total_credits = total_credits + %s WHERE email = %s", (total_credits, email))
+
+            conn.commit()
+            conn.close()
+
+            flash("A total of {} credits have been updated to your account!".format(total_credits))
+            
+            #flash("A total of {} credits have been updated to your account!".format(plan))
 
     return render_template('plan.html')
 
