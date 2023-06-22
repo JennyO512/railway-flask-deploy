@@ -14,6 +14,7 @@ import stripe
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'super_secret_key'
+app.config['STRIPE_WEBHOOK_SECRET'] = 'STRIPE_WEBHOOK_SECRET'
 
 # Create an intense of the LoginManager class
 login_manager = LoginManager()
