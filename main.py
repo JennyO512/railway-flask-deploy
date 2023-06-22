@@ -9,6 +9,7 @@ import base64
 from picture_api import replicate_api_function
 import psycopg2
 from psycopg2 import sql 
+import stripe
 
 
 app = Flask(__name__)
@@ -87,7 +88,7 @@ class User(UserMixin):
 UPLOAD_FOLDER = 'uploaded_images'
 
 # total credits, to be used globally
-total_credits = 5
+total_credits = 0
 used_credits = 0
 
 #this is my start
@@ -123,10 +124,11 @@ def dashboard():
     conn.close()
     
     # Manage User Credits
-    #insufficient_credits = False
+    insufficient_credits = False
+    
     # total purchased credits (default=5 when user registers)
-    #total_credits = current_user.total_credits
-    #used_credits = current_user.used_credits
+    total_credits = current_user.total_credits
+    used_credits = current_user.used_credits
     user_credits = total_credits - used_credits
 
 
