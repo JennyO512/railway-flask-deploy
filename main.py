@@ -191,7 +191,8 @@ def dashboard():
 def display_image(filename):
     return send_from_directory(UPLOAD_FOLDER, filename)    
 
-#this is the route to get paid, it does to the plan.html file
+#this is the route to get paid, it goes to the plan.html file
+"""
 @app.route('/subscription', methods=['GET', 'POST'])
 def subscribe():
     if request.method == 'POST':
@@ -241,6 +242,56 @@ def subscribe():
             #flash("A total of {} credits have been updated to your account!".format(plan))
 
     return render_template('plan.html')
+    """
+@app.route('/subscription', methods=['GET', 'POST'])
+@login_required
+def subscribe():
+    if request.method == 'POST':
+        email = request.form.get('email', current_user.email)
+        token = request.form['stripeToken']
+        plan = request.form.get('plan', 'pro')  # default to 'pro' if no plan is specified
+
+        # Create a new customer in Stripe
+        customer = stripe.Customer.create(
+            email=email,
+            source=token
+        )
+
+        # Depending on the plan, set the price ID and credit allocation
+        if plan == 'premium':
+            price_id = 'prod_Nvp3GfvoJl1LiD'
+            total_credits = 50
+        else:
+            price_id = 'prod_Nvp2Sttg35Wp87'
+            total_credits = 20
+
+        # Create a subscription for the customer with your product
+        subscription = stripe.Subscription.create(
+            customer=customer.id,
+            items=[
+                {
+                    'price': price_id
+                }
+            ],
+        )
+
+        if subscription.status == 'active':
+            # Find the user in your database and update their credits
+            user = User.query.filter_by(email=email).first()
+            if user:
+                user.total_credits = total_credits
+                user.used_credits = 0  # Reset used credits
+                db.session.commit()
+                flash("Subscription for {} plan created successfully!".format(plan))
+            else:
+                flash("User not found in database. Please check the email address and try again.")
+        return redirect(url_for('dashboard'))  # Redirect to dashboard
+
+    return render_template('plan.html')
+    
+
+
+
 
 
 # REGISTER USER
@@ -404,6 +455,57 @@ def update_credits():
 
     return jsonify({'status': 'success'})
 
+# ADD 5 CREDITS FOR TESTING PURPOSES (REMOVE THIS AND HTML WHEN DONE TESTING)
+@ app.route("/credit")
+def add_credit():
+    try:
+        current_user.total_credits += 5
+        db.session.commit()
+        print("5 extra credits added.")
+        return redirect(url_for('dashboard'))
+    except AttributeError:
+        flash('Please log in to add credits.')
+        return redirect(url_for('login'))
+
+
+
+@app.route('/webhook', methods=['POST'])
+def stripe_webhook():
+    payload = request.get_data(as_text=True)
+    sig_header = request.headers.get('Stripe-Signature')
+    event = None
+
+    try:
+        event = stripe.Webhook.construct_event(
+            payload, sig_header, app.config['STRIPE_WEBHOOK_SECRET']
+        )
+    except ValueError as e:
+        # Invalid payload
+        return 'Invalid payload', 400
+    except stripe.error.SignatureVerificationError as e:
+        # Invalid signature
+        return 'Invalid signature', 400
+
+    # Handle the checkout.session.completed event
+    if event['type'] == 'checkout.session.completed':
+        session = event['data']['object']
+        customer_email = session['customer_details']['email']
+
+        # Fetch the user from the database
+        user = User.query.filter_by(email=customer_email).first()
+        if user:
+            # Update user's credits based on the plan they purchased
+            if session['display_items'][0]['plan']['id'] == 'prod_Nvp3GfvoJl1LiD':
+                user.total_credits += 50
+            else:
+                user.total_credits += 20
+            db.session.commit()
+            logging.info('User credits updated successfully')
+
+    return '', 200
+
+
+"""
 @app.route('/webhook', methods=['POST'])
 def stripe_webhook():
     payload = request.get_data(as_text=True)
@@ -435,7 +537,7 @@ def stripe_webhook():
             db.session.commit()
 
     return '', 200
-    
+    """
 
 
 # LOGOUT USER
