@@ -147,7 +147,7 @@
    <a class="nav-link text-uppercase " href="/">Home</a>
    </li>
    <li class="nav-item" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Pricing">
-   <a class="nav-link text-uppercase " href="./plan.html">Pricing</a>
+   <a class="nav-link text-uppercase " href="./subscription">Pricing</a>
    </li>
    <li class="nav-item" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Blog">
    <a class="nav-link text-uppercase " href="/#about">Blog</a>
@@ -191,7 +191,10 @@
                         <button class="nav-link-primary" type="button" id="start">Take Picture</button>
                         <video style="display: none" id="video" autoplay playsinline></video>
                         <canvas style="display: none" id="canvas" width="640" height="480"></canvas>
-                        <button class="nav-link-primary" style="display: none" type="button" id="capture"><i class="fa-solid fa-camera"></i></button>
+                        
+                      <button class="nav-link-primary" style="display: none" type="button" id="capture">
+                        <i class="fa-solid fa-camera"></i>
+                        </button>
                         <div class="img-container">
                             <input type="hidden" id="hiddenImageInput" name="hiddenImageInput" />
                         </div>
@@ -249,10 +252,12 @@
     <br>
     <h6 id="check-image-text" style="display: none">Click 'Retake Picture' to Take The Picture Again or 'Submit' To Proceed</h6>
     <br>
-<!--     {% if insufficient_credits %}
+  
+     {% if insufficient_credits %}
         <br>
         <h4 style="color: red">You do not have enough credits.</h4>
-    {% endif %} -->
+    {% endif %} 
+  
 </div>
 <br>
 <br>
@@ -296,12 +301,12 @@
   <!-- Step 4: Submit -->
   <!-- <div class="form-select">
     <h3>Step 4: Submit</h3>
+<br>
     <button class="nav-link-primary" type="submit" id="submit">Submit</button>
 
-        <input type="file" id="fileInput" name="file" accept="image/*">
-        <br>
-        <br>
-
+<input type="file" id="fileInput" name="file" accept="image/*">
+<br>
+<br>
 
 <button class="nav-link-primary" type="button" id="start">Take Picture</button>
         <video style="display: none" id="video" autoplay playsinline></video>
@@ -314,15 +319,16 @@
         <button class="nav-link-primary" style="display: none" type="button" id="capture">
           <i class="fa-solid fa-camera"></i>
         </button>
-        <div class="clearfix">
-              <!-- input to store the uploaded image data -->
-          <div class="img-container">
+                  
+<div class="clearfix">
+<!-- input to store the uploaded image data -->
+<div class="img-container">
 <input type="hidden" id="hiddenImageInput" name="hiddenImageInput" />
-          </div>
+</div>
 
-          <br>
-          <h6 id="check-image-text" style="display: none">Click 'Retake Picture' to Take The Picture Again or 'Submit' To Proceed</h6>
-          <br> 
+<br>
+<h6 id="check-image-text" style="display: none">Click 'Retake Picture' to Take The Picture Again or 'Submit' To Proceed</h6>
+<br> 
 <!--button class="nav-link-primary" type="submit" id="submit">Submit</button-->
 <br>
 
@@ -383,7 +389,7 @@
   <!--div>
       <!-- Button to Add 5 credits for TESTING -->
     <button style="display: flex" class="nav-link-primary">
-      <a style="text-decoration: none; color: black;" href="{{ url_for('update_credits') }}">Click to add 5 Credits (For Testing)
+      <a style="text-decoration: none; color: black;" href="{{ url_for('credits') }}">Click to add 5 Credits (For Testing)
       </a>
     </button>
   </div-->
@@ -431,49 +437,54 @@
     </main>
     <script src="/static/dashboard.js"></script>
     <script>
-    // Get access to the camera and display the video stream
-    const startButton = document.getElementById('start');
-    const video = document.getElementById('video');
-    const canvas = document.getElementById('canvas');
-    const captureButton = document.getElementById('capture');
-    const hiddenImageInput = document.getElementById('hiddenImageInput');
+// Get access to the camera and display the video stream
+const startButton = document.getElementById('start');
+const video = document.getElementById('video');
+const canvas = document.getElementById('canvas');
+const captureButton = document.getElementById('capture');
+const hiddenImageInput = document.getElementById('hiddenImageInput');
 
-    // Check if the browser supports getUserMedia
-    if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
-        startButton.addEventListener('click', function() {
-            // Request permission to access the camera
-            navigator.mediaDevices.getUserMedia({ video: true })
-                .then(function(stream) {
-                    // Display the video stream in the video element
-                    video.srcObject = stream;
-                    video.style.display = 'block';
-                    captureButton.style.display = 'block';
-                    startButton.style.display = 'none';
-                })
-                .catch(function(error) {
-                    console.error('Error accessing the camera:', error);
-                });
-        });
-
-        captureButton.addEventListener('click', function() {
-            // Capture the current video frame and convert it to an image
-            canvas.getContext('2d').drawImage(video, 0, 0, canvas.width, canvas.height);
-            const imageDataURL = canvas.toDataURL('image/png');
-
-            // Set the captured image data in the hidden input field
-            hiddenImageInput.value = imageDataURL;
-
-            // Stop the video stream and hide the video element
-            video.srcObject.getTracks().forEach(function(track) {
-                track.stop();
+// Check if the browser supports getUserMedia
+if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
+    startButton.addEventListener('click', function() {
+        // Request permission to access the camera
+        navigator.mediaDevices.getUserMedia({ 
+            video: { 
+                facingMode: "environment" // Use the rear-facing camera
+            } 
+        })
+            .then(function(stream) {
+                // Display the video stream in the video element
+                video.srcObject = stream;
+                video.style.display = 'block';
+                captureButton.style.display = 'block';
+                startButton.style.display = 'none';
+            })
+            .catch(function(error) {
+                console.error('Error accessing the camera:', error);
             });
-            video.style.display = 'none';
-            captureButton.style.display = 'none';
-            startButton.style.display = 'block';
+    });
+
+    captureButton.addEventListener('click', function() {
+        // Capture the current video frame and convert it to an image
+        canvas.getContext('2d').drawImage(video, 0, 0, canvas.width, canvas.height);
+        const imageDataURL = canvas.toDataURL('image/png');
+
+        // Set the captured image data in the hidden input field
+        hiddenImageInput.value = imageDataURL;
+
+        // Stop the video stream and hide the video element
+        video.srcObject.getTracks().forEach(function(track) {
+            track.stop();
         });
-    } else {
-        console.error('getUserMedia is not supported by this browser.');
-    }
+        video.style.display = 'none';
+        captureButton.style.display = 'none';
+        startButton.style.display = 'block';
+    });
+} else {
+    console.error('getUserMedia is not supported by this browser.');
+}
+
 </script>
 <script>
     function openNavbar() {
