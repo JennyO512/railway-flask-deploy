@@ -89,7 +89,7 @@ class User(UserMixin):
 UPLOAD_FOLDER = 'uploaded_images'
 
 # total credits, to be used globally
-total_credits = 0
+total_credits = 5
 used_credits = 0
 
 #this is my start
