@@ -18,7 +18,7 @@
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
     integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 
-  <link data-turbo-track="reload" rel="stylesheet" href="./static/bootstrap-icons.css">
+  <link data-turbo-track="reload" rel="stylesheet" href="../static/bootstrap-icons.css">
 
   <!-- * Inline CSS -->
   <style type="text/css" id="tts-styles">
@@ -58,11 +58,11 @@
   <header>
     <nav class="navbar navbar-light nav-site navbar-expand-md fixed-top navigation-clean">
       <div class="container position-relative">
-        <a href="login.html">
+        <a href="/">
           <img style="width: 48px;padding-right: 10px;" src="../static/logo3.png">
         </a>
 
-        <a class="navbar-brand d-md-none d-lg-block fs-4 fancy-font" href="#about" style="letter-spacing: 1px;"
+        <a class="navbar-brand d-md-none d-lg-block fs-4 fancy-font" href="/" style="letter-spacing: 1px;"
           translate="no">Design<span class="text-primary">AI</span><!-- ? Dont see html page for this -->
         </a>
 
@@ -116,7 +116,7 @@
           <p class="col-lg-10 fs-4 text-secondary">Welcome to DesignAi, your go-to virtual assistant for transforming
             your living spaces effortlessly. Our intelligent platform harnesses the power of advanced AI algorithms to
             understand your unique style preferences and recreate your room with class.</p>
-          <a class="btn btn-lg btn-primary mb-2 mx-1" href="dashboard.html">Create Your FREE Account</a>
+          <a class="btn btn-lg btn-primary mb-2 mx-1" href="/dashboard">Create Your FREE Account</a>
           <a class="btn btn-lg btn-outline-dark mb-2 mx-1" href="#">Get Some Inspiration</a>
         </div>
 
@@ -203,7 +203,7 @@
   <!-- Footer -->
   <!---------------------------------------------------------------------------------------------->
   <footer class="py-3 my-4">
-    <p class="text-center text-muted">© 2023 DesignAi | <a href="#about">About</a> | <a href="login.html">Affiliate
+    <p class="text-center text-muted">© 2023 DesignAi | <a href="#about">About</a> | <a href="/login">Affiliate
         Program</a> |<a href="mailto:designai@gmail.com?subject=I%20have%20a%20question...">designai@gmail.com</a></p>
   </footer>
 
@@ -212,7 +212,7 @@
   <!-- TODO: Refactor JavaScript remove inline scripting -->
   <!---------------------------------------------------------------------------------------------->
   <script
-    src="./static/es-module-shims.min-c346276ff4a25707638039561b6d3bdddccedaca54f9aa5c24e1625404c36b6b.js.download"
+    src="../static/es-module-shims.min-c346276ff4a25707638039561b6d3bdddccedaca54f9aa5c24e1625404c36b6b.js.download"
     async="async" data-turbo-track="reload"></script>
   <script type="module" import="application"></script>
 
@@ -221,7 +221,7 @@
     integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
     crossorigin="anonymous"></script>
 
-  <script src="/static/script.js"></script>
+  <script src="../static/script.js"></script>
 
   <!-- * Inline JavaScript -->
   <script>
