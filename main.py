@@ -306,7 +306,7 @@ def register():
         # Hash and salt the password
         hashed_password = generate_password_hash(password1, method='sha256', salt_length=8)
 
-        new_user = User(id=None, email=email, password=hashed_password, total_credits=0, used_credits=0)
+        new_user = User(id=None, email=email, password=hashed_password, total_credits=5, used_credits=0)
 
         if len(password1) < 7:
             flash('Password must be at least 7 characters.')
