@@ -290,10 +290,69 @@ def subscribe():
     return render_template('plan.html')
     
 
+#updated register route on 7/3 added error checking
+#REGISTER ROUTE
+@app.route("/register", methods=['GET', 'POST'])
+def register():
+    if request.method == 'POST':
+        print(request.form)
+        email = request.form.get('email')
+        password1 = request.form.get('password1')
+        password2 = request.form.get('password2')
+
+        if not email or not password1 or not password2:
+            flash('Missing email or password.')
+            return render_template('register.html')
+
+        # Hash and salt the password
+        try:
+            hashed_password = generate_password_hash(password1, method='sha256', salt_length=8)
+        except Exception as e:
+            print(f"Error hashing password: {e}")
+            flash('Error creating account. Please try again.')
+            return render_template('register.html')
+
+        new_user = User(id=None, email=email, password=hashed_password, total_credits=5, used_credits=0)
+
+        if len(password1) < 7:
+            flash('Password must be at least 7 characters.')
+        elif password1 != password2:
+            flash('Passwords do not match.')
+        else:
+            try:
+                # Connect to the PostgreSQL database
+                conn = psycopg2.connect(connection_string)
+                cur = conn.cursor()
+
+                # Execute the INSERT statement
+                cur.execute(
+                    "INSERT INTO users (email, password, total_credits, used_credits) VALUES (%s, %s, %s, %s);",
+                    (new_user.email, new_user.password, new_user.total_credits, new_user.used_credits)
+                )
+
+                # Commit the transaction
+                conn.commit()
+
+                # Close the connection
+                conn.close()
+
+                # Login the new user
+                login_user(new_user)
+
+                flash('Account created successfully. 5 credits added.')
+                return redirect(url_for('dashboard'))
+
+            except IntegrityError:
+                flash('User with that email already exists. Please log in instead.')
+                return redirect(url_for('login'))
+            except Exception as e:
+                print(f"Error creating account: {e}")
+                flash('Error creating account. Please try again.')
+
+    return render_template('register.html')
 
 
-
-
+"""
 # REGISTER USER
 @app.route("/register", methods=['GET', 'POST'])
 def register():
@@ -344,7 +403,7 @@ def register():
                 return redirect(url_for('login'))
 
     return render_template('register.html')
-
+"""
 
 # REGISTER USER
 #@ app.route("/register", methods=['GET', 'POST'])
