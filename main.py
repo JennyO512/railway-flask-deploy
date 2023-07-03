@@ -332,14 +332,17 @@ def register():
 
                 # Commit the transaction
                 conn.commit()
+                print("line 335 | commited the transaction successfully")
 
                 # Close the connection
                 conn.close()
 
                 # Login the new user
                 login_user(new_user)
+                print("User Logged in.")
 
                 flash('Account created successfully. 5 credits added.')
+                flash("Line 345 flashing messages worked")
                 return redirect(url_for('dashboard'))
 
             except IntegrityError:
