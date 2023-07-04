@@ -309,7 +309,7 @@ def register():
             hashed_password = generate_password_hash(password1, method='sha256', salt_length=8)
         except Exception as e:
             print(f"Error hashing password: {e}")
-            flash('Error creating account. Please try again.')
+            flash('Error creating account. Line 312 | Please try again.')
             return render_template('register.html')
 
         new_user = User(id=None, email=email, password=hashed_password, total_credits=5, used_credits=0)
@@ -350,7 +350,7 @@ def register():
                 return redirect(url_for('login'))
             except Exception as e:
                 print(f"Error creating account: {e}")
-                flash('Error creating account. Please try again.')
+                flash('Error creating account. Line 353 | Please try again.')
 
     return render_template('register.html')
 
