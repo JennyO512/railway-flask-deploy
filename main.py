@@ -349,8 +349,10 @@ def register():
                 flash('User with that email already exists. Please log in instead.')
                 return redirect(url_for('login'))
             except Exception as e:
-                print(f"Error creating account: {e}")
-                flash('Error creating account. Line 353 | Please try again.')
+                flash('User with that email already exists. Please log in instead. Line 352')
+                return redirect(url_for('login'))
+                #print(f"Error creating account: {e}")
+                #flash('Error creating account. Line 353 | Please try again.')
 
     return render_template('register.html')
 
