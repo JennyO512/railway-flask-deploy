@@ -44,25 +44,6 @@ def load_user(user_id):
 
     # Assuming the User class has a constructor that accepts all the fields in the same order they're in the database
     return User(*user_data)
-
-"""    
-# Tell Flask-Login how to load the user from the ID
-@login_manager.user_loader
-def load_user(user_id):
-    conn = psycopg2.connect(connection_string)
-    cur = conn.cursor()
-
-    cur.execute("SELECT * FROM users WHERE id = id", (user_id,))
-    user_data = cur.fetchone()
-
-    conn.close()
-
-    if user_data is None:
-        return None
-
-    # Assuming the User class has a constructor that accepts all the fields in the same order they're in the database
-    return User(*user_data)
-""" 
  
 class User(UserMixin):
     def __init__(self, id, email, password, total_credits, used_credits):
@@ -121,7 +102,20 @@ def dashboard():
 
     # Fetch the user's credits from the database
     cur.execute("SELECT total_credits, used_credits FROM users WHERE id = %s", (current_user.id,))
-    total_credits, used_credits = cur.fetchone()
+    #total_credits, used_credits = cur.fetchone()
+
+    #print the query to see if anything comes up
+    result = cur.fetchone()
+
+    # Print the result
+    print(result)
+
+    # Assign the result to total_credits and used_credits
+    if result is not None:
+        total_credits, used_credits = result
+    else:
+        print("No user found with id:", current_user.id)                              
+
     conn.close()
     
     # Manage User Credits
@@ -158,33 +152,7 @@ def dashboard():
 
     return render_template('dashboard.html', total_credits=total_credits, used_credits=used_credits)
 
-    
-"""    
-    if request.method == 'POST':
-        room_input = request.form['room'].title()
-        style_input = request.form['room-style'].title()
 
-        if request.form['hiddenImageInput']:
-            filename = uploaded_filename
-            print('Uploaded Filename:', filename)
-        elif request.files['file']:
-            timestamp = datetime.now().strftime('%Y%m%d%H%M%S')
-            file = request.files['file']
-            filename = file.filename
-            filename = f"{timestamp}_{filename}"
-            file.save(os.path.join(UPLOAD_FOLDER, filename))
-            print('Uploaded Filename:', filename)
-            uploaded_image = url_for('static', filename=f"{UPLOAD_FOLDER}/{filename}")
-
-        api_token = os.getenv('REPLICATE_API_TOKEN')
-        output = replicate_api_function(room_input, style_input, f'{UPLOAD_FOLDER}/{filename}')
-
-        if output:
-            print('API OUTPUT:', output)
-            return render_template('dashboard.html', api_output=True, output_image_link=output[1], original_image_name=filename, user_input=[room_input, style_input])
-
-    return render_template('dashboard.html')
-"""
  
  #this route uploads the picture to the uploaded folder 
 @app.route('/uploads/<filename>')
@@ -243,6 +211,8 @@ def subscribe():
 
     return render_template('plan.html')
     """
+
+
 @app.route('/subscription', methods=['GET', 'POST'])
 @login_required
 def subscribe():
@@ -357,92 +327,6 @@ def register():
     return render_template('register.html')
 
 
-"""
-# REGISTER USER
-@app.route("/register", methods=['GET', 'POST'])
-def register():
-    if request.method == 'POST':
-        print(request.form)
-        email = request.form['email']
-        password1 = request.form['password1']
-        password2 = request.form['password2']
-
-        # Hash and salt the password
-        hashed_password = generate_password_hash(password1, method='sha256', salt_length=8)
-
-        new_user = User(id=None, email=email, password=hashed_password, total_credits=5, used_credits=0)
-
-        if len(password1) < 7:
-            flash('Password must be at least 7 characters.')
-        elif password1 != password2:
-            flash('Passwords do not match.')
-        else:
-            try:
-                # Set total_credits to 5
-                new_user.total_credits = 5            
-
-                # Connect to the PostgreSQL database
-                conn = psycopg2.connect(connection_string)
-                cur = conn.cursor()
-
-                # Execute the INSERT statement
-                cur.execute(
-                    "INSERT INTO users (email, password, total_credits, used_credits) VALUES (%s, %s, %s, %s);",
-                    (new_user.email, new_user.password, new_user.total_credits, new_user.used_credits)
-                )
-
-                # Commit the transaction
-                conn.commit()
-
-                # Close the connection
-                conn.close()
-
-                # Login the new user
-                login_user(new_user)
-
-                flash('Account created successfully. 5 credits added.')
-                return redirect(url_for('dashboard'))
-
-            except IntegrityError:
-                flash('User with that email already exists. Please log in instead.')
-                return redirect(url_for('login'))
-
-    return render_template('register.html')
-"""
-
-# REGISTER USER
-#@ app.route("/register", methods=['GET', 'POST'])
-#def register():
-#    if request.method == 'POST':
-#        print(request.form)
-#        email = request.form['email']
-#        password1 = request.form['password1']
-#        password2 = request.form['password2']
-#
-        # hash and salt password
-#        hashed_password = generate_password_hash(
-#            password1, method='sha256', salt_length=8)
-
-        #new_user = User(email=email, password=hashed_password)
- #       new_user = User(id=None, email=email, password=hashed_password, total_credits=0, used_credits=0)
-
- #       if len(password1) < 7:
- #           flash('Password must be at least 7 characters.')
- #       elif password1 != password2:
- #           flash('Passwords do not match.')
- #       else:
- #           try:
- #               db.session.add(new_user)
- #               db.session.commit()
- #               # login new user
- #               login_user(new_user)
- #               flash('Account created successfully. 5 credits added.')
- #               return redirect(url_for('dashboard'))
- #           except IntegrityError:
- #               flash('User with that email already exists. Please log in instead.')
- #               return redirect(url_for('login'))
- #   return render_template('register.html')
-
 # LOGIN USER
 @app.route("/login", methods=['GET', 'POST'])
 def login():
@@ -471,26 +355,6 @@ def login():
 
     return render_template('login.html')
 
-
-
-# LOGIN USER
-#@ app.route("/login", methods=['GET', 'POST'])
-#def login():
-#    if request.method == 'POST':
-#        email = request.form['email']
-#        password = request.form['password']
-#        user = User.query.filter_by(email=email).first()
-#        if user:
-#            if check_password_hash(user.password, password):
-#                login_user(user)
-#                flash('Logged in successfully.')
-#                return redirect(url_for('dashboard'))
-#            else:
-#                flash('Password is incorrect, please try again.')
-#        else:
-#            flash('User does not exist. Please register instead.')
-#            return redirect(url_for('register'))
-#    return render_template('login.html')
 
 
 @app.route('/update_credits', methods=['POST'])
@@ -567,41 +431,6 @@ def stripe_webhook():
             logging.info('User credits updated successfully')
 
     return '', 200
-
-
-"""
-@app.route('/webhook', methods=['POST'])
-def stripe_webhook():
-    payload = request.get_data(as_text=True)
-    sig_header = request.headers.get('Stripe-Signature')
-    event = None
-
-    try:
-        event = stripe.Webhook.construct_event(
-            payload, sig_header, app.config['STRIPE_WEBHOOK_SECRET']
-        )
-    except ValueError as e:
-        # Invalid payload
-        return 'Invalid payload', 400
-    except stripe.error.SignatureVerificationError as e:
-        # Invalid signature
-        return 'Invalid signature', 400
-
-    # Handle the checkout.session.completed event
-    if event['type'] == 'checkout.session.completed':
-        session = event['data']['object']
-        customer_email = session['customer_email']
-        # For simplicity, we assume that the user's email in our database is the same as the customer's email in Stripe
-
-        # Fetch the user from the database
-        user = User.query.filter_by(email=customer_email).first()
-        if user:
-            # Update user's credits
-            user.total_credits += 10  # Update this based on the actual number of credits bought
-            db.session.commit()
-
-    return '', 200
-    """
 
 
 # LOGOUT USER
