@@ -102,7 +102,7 @@ def dashboard():
 
     # Fetch the user's credits from the database
     cur.execute("SELECT total_credits, used_credits FROM users WHERE id = %s", (current_user.id,))
-    #total_credits, used_credits = cur.fetchone()
+    total_credits, used_credits = cur.fetchone()
 
     #print the query to see if anything comes up
     result = cur.fetchone()
