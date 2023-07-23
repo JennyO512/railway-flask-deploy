@@ -1,10 +1,10 @@
 from flask import request
 import replicate
+from replicate.exceptions import ReplicateError
 import os
 
 # Get the API token from the .env file
 api_token = os.getenv('REPLICATE_API_TOKEN')
-
 
 
 # Define the parameters to the API
@@ -21,8 +21,35 @@ detect_resolution = 512
 value_threshold = 0.1
 distance_threshold = 0.1
 
-
 # function takes in the image path and returns the output from the API
+def replicate_api_function(room_input, style_input, image_path):
+    model_prompt = f"Remodel this {room_input} and make it look like a {style_input} style."
+    try:
+        output = replicate.run(
+            "jagilley/controlnet-hough:854e8727697a057c525cdb45ab037f64ecca770a1769cc52287c2e56472a247b",
+            input={"image": open(image_path, "rb"), "prompt": model_prompt},
+            params={
+                "num_samples": num_samples,
+                "image_resolution": image_resolution,
+                "ddim_steps": ddim_steps,
+                "scale": scale,
+                "seed": seed,
+                "eta": eta,
+                "a_prompt": a_prompt,
+                "n_prompt": n_prompt,
+                "detect_resolution": detect_resolution,
+                "value_threshold": value_threshold,
+                "distance_threshold": distance_threshold
+            }
+        )
+        print('SUCCESSFULLY CALLED REPLICATE API')
+        print("MODEL PROMPT:", f"'{model_prompt}'")
+        return output
+    except ReplicateError as e:
+        print(f"An error occurred while making the request: {e}")
+        return None
+
+"""
 def replicate_api_function(room_input, style_input, image_path):
     model_prompt = f"Remodel this {room_input} and make it look like a {style_input} style."
     output = replicate.run(
@@ -47,3 +74,7 @@ def replicate_api_function(room_input, style_input, image_path):
     print('SUCCESSFULLY CALLED REPLICATE API')
     print("MODEL PROMPT:", f"'{model_prompt}'")
     return output
+except ReplicateError as e:
+        print(f"An error occurred while making the request: {e}")
+        return None
+"""
