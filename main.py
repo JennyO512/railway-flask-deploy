@@ -246,18 +246,29 @@ def subscribe():
         )
 
         if subscription.status == 'active':
-            # Find the user in your database and update their credits
-            user = User.query.filter_by(email=email).first()
-            if user:
-                user.total_credits = total_credits
-                user.used_credits = 0  # Reset used credits
-                db.session.commit()
+            # Connect to the PostgreSQL database
+            conn = psycopg2.connect(connection_string)
+            cur = conn.cursor()
+
+            # Fetch the user from the database
+            cur.execute("SELECT * FROM users WHERE email = %s;", (email,))
+            user_data = cur.fetchone()
+
+            if user_data:
+                user = User(*user_data)
+                # Update the user's total credits in your database
+                cur.execute("UPDATE users SET total_credits = total_credits + %s WHERE email = %s", (total_credits, email))
+
+                conn.commit()
+                conn.close()
+
                 flash("Subscription for {} plan created successfully!".format(plan))
             else:
                 flash("User not found in database. Please check the email address and try again.")
         return redirect(url_for('dashboard'))  # Redirect to dashboard
 
     return render_template('plan.html')
+
     
 
 #updated register route on 7/3 added error checking
