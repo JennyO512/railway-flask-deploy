@@ -282,8 +282,6 @@ def register():
             flash('Error creating account. Line 312 | Please try again.')
             return render_template('register.html')
 
-        new_user = User(id=None, email=email, password=hashed_password, total_credits=5, used_credits=0)
-
         if len(password1) < 7:
             flash('Password must be at least 7 characters.')
         elif password1 != password2:
@@ -297,22 +295,25 @@ def register():
                 # Execute the INSERT statement
                 cur.execute(
                     "INSERT INTO users (email, password, total_credits, used_credits) VALUES (%s, %s, %s, %s);",
-                    (new_user.email, new_user.password, new_user.total_credits, new_user.used_credits)
+                    (email, hashed_password, 5, 0)
                 )
 
                 # Commit the transaction
                 conn.commit()
-                print("line 335 | commited the transaction successfully")
 
                 # Close the connection
                 conn.close()
 
-                # Login the new user
-                login_user(new_user)
-                print("User Logged in.")
+                # Fetch the user from the database
+                cur.execute("SELECT * FROM users WHERE email = %s;", (email,))
+                user_data = cur.fetchone()
+
+                if user_data:
+                    user = User(*user_data)
+                    # Log in the user
+                    login_user(user)
 
                 flash('Account created successfully. 5 credits added.')
-                flash("Line 345 flashing messages worked")
                 return redirect(url_for('dashboard'))
 
             except IntegrityError:
@@ -321,10 +322,9 @@ def register():
             except Exception as e:
                 flash('User with that email already exists. Please log in instead. Line 352')
                 return redirect(url_for('login'))
-                #print(f"Error creating account: {e}")
-                #flash('Error creating account. Line 353 | Please try again.')
 
     return render_template('register.html')
+
 
 
 # LOGIN USER
