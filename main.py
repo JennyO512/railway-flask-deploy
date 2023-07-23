@@ -419,18 +419,31 @@ def stripe_webhook():
         session = event['data']['object']
         customer_email = session['customer_details']['email']
 
+        # Connect to the PostgreSQL database
+        conn = psycopg2.connect(connection_string)
+        cur = conn.cursor()
+
         # Fetch the user from the database
-        user = User.query.filter_by(email=customer_email).first()
-        if user:
+        cur.execute("SELECT * FROM users WHERE email = %s", (customer_email,))
+        user_data = cur.fetchone()
+
+        if user_data:
+            user = User(*user_data)
             # Update user's credits based on the plan they purchased
             if session['display_items'][0]['plan']['id'] == 'prod_Nvp3GfvoJl1LiD':
                 user.total_credits += 50
             else:
                 user.total_credits += 20
-            db.session.commit()
-            logging.info('User credits updated successfully')
+
+            # Update the user's credits in the database
+            cur.execute("UPDATE users SET total_credits = %s WHERE email = %s", (user.total_credits, customer_email))
+            conn.commit()
+            print('User credits updated successfully')
+
+        conn.close()
 
     return '', 200
+
 
 
 # LOGOUT USER
