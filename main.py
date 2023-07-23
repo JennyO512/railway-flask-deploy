@@ -384,16 +384,37 @@ def update_credits():
     return jsonify({'status': 'success'})
 
 # ADD 5 CREDITS FOR TESTING PURPOSES (REMOVE THIS AND HTML WHEN DONE TESTING)
-@ app.route("/credit")
+@app.route("/credit")
+@login_required
 def add_credit():
     try:
+        # Connect to the PostgreSQL database
+        conn = psycopg2.connect(connection_string)
+        cur = conn.cursor()
+
+        # Update the user's credits
+        cur.execute(
+            sql.SQL(
+                "UPDATE users SET total_credits = total_credits + 5 WHERE email = %s"
+            ),
+            [current_user.email]
+        )
+
+        # Commit the transaction
+        conn.commit()
+
+        # Close the connection
+        conn.close()
+
+        # Update the user's credits in the session
         current_user.total_credits += 5
-        db.session.commit()
+
         print("5 extra credits added.")
         return redirect(url_for('dashboard'))
     except AttributeError:
         flash('Please log in to add credits.')
         return redirect(url_for('login'))
+
 
 
 
