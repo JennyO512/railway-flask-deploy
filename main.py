@@ -97,19 +97,25 @@ def upload_image():
 #another attempt at dashboard route
 @app.route("/dashboard", methods=['GET', 'POST'])
 def dashboard():
+    print("Dashboard route hit")  # Debugging print statement
+
     # Connect to the PostgreSQL database
     conn = psycopg2.connect(connection_string)
     cur = conn.cursor()
 
     # Fetch the user's credits from the database
     cur.execute("SELECT total_credits, used_credits FROM users WHERE id = %s", (current_user.id,))
-    total_credits, used_credits = cur.fetchone()
+    result = cur.fetchone()
+    print(f"Database query result: {result}")  # Debugging print statement
+
+    total_credits, used_credits = result
 
     # Close the connection
     conn.close()
     
     # Calculate user credits
     user_credits = total_credits - used_credits
+    print(f"User credits: {user_credits}")  # Debugging print statement
 
     if request.method == 'POST':
         room_input = request.form['room'].title()
