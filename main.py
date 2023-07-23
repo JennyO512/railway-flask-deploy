@@ -112,9 +112,11 @@ def dashboard():
 
     # Close the connection
     conn.close()
-    
+
+    results = total_credits, used_credits
+    user_credits = results
     # Calculate user credits
-    user_credits = total_credits - used_credits
+    #user_credits = total_credits - used_credits
     print(f"User credits: {user_credits}")  # Debugging print statement
 
     if request.method == 'POST':
