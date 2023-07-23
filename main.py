@@ -93,6 +93,51 @@ def upload_image():
         f.write(base64.b64decode(image_data.split(',')[1]))
     return jsonify({'message': 'Image uploaded successfully'}), 200
 
+
+#another attempt at dashboard route
+@app.route("/dashboard", methods=['GET', 'POST'])
+def dashboard():
+    # Connect to the PostgreSQL database
+    conn = psycopg2.connect(connection_string)
+    cur = conn.cursor()
+
+    # Fetch the user's credits from the database
+    cur.execute("SELECT total_credits, used_credits FROM users WHERE id = %s", (current_user.id,))
+    total_credits, used_credits = cur.fetchone()
+
+    # Close the connection
+    conn.close()
+    
+    # Calculate user credits
+    user_credits = total_credits - used_credits
+
+    if request.method == 'POST':
+        room_input = request.form['room'].title()
+        style_input = request.form['room-style'].title()
+
+        if request.form['hiddenImageInput']:
+            filename = uploaded_filename
+            print('Uploaded Filename:', filename)
+        elif request.files['file']:
+            timestamp = datetime.now().strftime('%Y%m%d%H%M%S')
+            file = request.files['file']
+            filename = file.filename
+            filename = f"{timestamp}_{filename}"
+            file.save(os.path.join(UPLOAD_FOLDER, filename))
+            print('Uploaded Filename:', filename)
+            uploaded_image = url_for('static', filename=f"{UPLOAD_FOLDER}/{filename}")
+
+        api_token = os.getenv('REPLICATE_API_TOKEN')
+        output = replicate_api_function(room_input, style_input, f'{UPLOAD_FOLDER}/{filename}')
+
+        if output:
+            print('API OUTPUT:', output)
+            return render_template('dashboard.html', api_output=True, output_image_link=output[1], original_image_name=filename, user_input=[room_input, style_input], total_credits=total_credits, used_credits=used_credits, user_credits=user_credits)
+
+    return render_template('dashboard.html', total_credits=total_credits, used_credits=used_credits, user_credits=user_credits)
+
+
+"""
 #this is the dashboard route
 @app.route("/dashboard", methods=['GET', 'POST'])
 def dashboard():
@@ -151,7 +196,7 @@ def dashboard():
             return render_template('dashboard.html', api_output=True, output_image_link=output[1], original_image_name=filename, user_input=[room_input, style_input], total_credits=total_credits, used_credits=used_credits)
 
     return render_template('dashboard.html', total_credits=total_credits, used_credits=used_credits)
-
+"""
 
  
  #this route uploads the picture to the uploaded folder 
