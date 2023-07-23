@@ -369,7 +369,7 @@ def update_credits():
         sql.SQL(
             "UPDATE users SET total_credits = total_credits + 5 WHERE email = %s"
         ),
-        [current_user.id]
+        [current_user.email]
     )
 
     # Commit the transaction
