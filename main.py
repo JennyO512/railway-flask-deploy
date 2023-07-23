@@ -45,7 +45,7 @@ def load_user(user_id):
     # Assuming the User class has a constructor that accepts all the fields in the same order they're in the database
     return User(*user_data)
  
-class User(UserMixin):
+class User(UserMixin, db.Model):
     def __init__(self, id, email, password, total_credits, used_credits):
         self.id = id
         self.email = email
