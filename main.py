@@ -104,7 +104,7 @@ def dashboard():
     cur = conn.cursor()
 
     # Fetch the user's credits from the database
-    cur.execute("SELECT total_credits, used_credits FROM users WHERE id = %s", (current_user.id,))
+    cur.execute("SELECT total_credits, used_credits FROM users WHERE email = %s", (current_user.email,))
     result = cur.fetchone()
     print(f"Database query result: {result}")  # Debugging print statement
 
