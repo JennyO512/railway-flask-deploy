@@ -11,69 +11,41 @@
    <!---------------------------------------------------------------------------------------------->
    <!-- FAVICONS -->
    <!-- TODO: Add to other html pages -->
+   <!-- TODO: Add favicons to static/img dir -->
    <!---------------------------------------------------------------------------------------------->
-   <link rel="apple-touch-icon" sizes="180x180"
+   <!--<link rel="apple-touch-icon" sizes="180x180"
       href="/static/favicon/apple-touch-icon-479bc6f24dfee0360454943760826f6b4c504e007bf498140543cc8dd9530265.png">
    <link rel="icon" type="image/png" sizes="32x32"
       href="/static/favicon/favicon-32x32-fc40a315f90b044e8851baa838615aa6a3d3847a01fae576cce4bc0b2c4709cb.png">
    <link rel="icon" type="image/png" sizes="16x16"
-      href="/static/favicon/favicon-16x16-2375cbe81f556380d7300ba942de1d80650c783853a4ebe52b32db3f3fde7b61.png">
+      href="/static/favicon/favicon-16x16-2375cbe81f556380d7300ba942de1d80650c783853a4ebe52b32db3f3fde7b61.png">-->
 
    <!---------------------------------------------------------------------------------------------->
    <!-- CSS -->
-   <!-- TODO: Refactor CSS -->
    <!---------------------------------------------------------------------------------------------->
-   <link rel="stylesheet"
-      href="/static/application-9aee6fc370ad0735fa57b3716443db63a17d820a370441d01f767a2b5ca9f999.css"
-      data-turbo-track="reload">
-
-   <!-- * Bootstrap CSS -->
-   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
-      integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css">
-
-   <!-- * Inline CSS -->
-   <style type="text/css">
-      .turbo-progress-bar {
-         position: fixed;
-         display: block;
-         top: 0;
-         left: 0;
-         height: 3px;
-         background: #0076ff;
-         z-index: 2147483647;
-         transition:
-            width 300ms ease-out,
-            opacity 150ms 150ms ease-in;
-         transform: translate3d(0, 0, 0);
-      }
-   </style>
-
-   <!-- ? NOT SURE of CSS Link -->
-   <link
-      href="data:text/css,%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20ddg-runtime-checks%20%7B%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20display%3A%20none%3B%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7D%0A%20%20%20%20%20%20%20%20%20%20%20%20"
-      rel="stylesheet" type="text/css">
+   <link rel="stylesheet" href="../static/css/main.css" data-turbo-track="reload">
+   <link rel="stylesheet" href="../static/css/custom.css">
 
 </head>
 
 <body>
    <!---------------------------------------------------------------------------------------------->
    <!-- Navigation Bar -->
-   <!-- TODO: Fix html pages and links -->
    <!---------------------------------------------------------------------------------------------->
    <header>
 
       <nav class="navbar navbar-light nav-site navbar-expand-md fixed-top navigation-clean">
          <div class="container position-relative">
             <a href="/">
-               <img class="" style="width: 48px;padding-right: 10px;" src="../static/logo3.png">
+               <img class="nav-bar-style" src="../static/img/logo3.png">
             </a>
-            <a class="navbar-brand d-md-none d-lg-block fs-4 fancy-font" href="/" style="letter-spacing: 1px;"
-               translate="no">Design<span class="text-primary">AI</span></a>
+            <a class="navbar-brand d-md-none d-lg-block fs-4 fancy-font spacing" href="/" translate="no">Design<span class="text-primary">AI</span></a>
+
             <button data-bs-toggle="collapse" class="navbar-toggler" data-bs-target="#navcol-1">
                <span class="visually-hidden">Toggle navigation</span>
                <span class="navbar-toggler-icon"></span>
             </button>
+
             <div class="collapse navbar-collapse" id="navcol-1">
                <ul class="navbar-nav ms-auto">
                   <li class="nav-item" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Home">
@@ -99,12 +71,12 @@
 
    <!---------------------------------------------------------------------------------------------->
    <!-- Main Section -->
-   <!-- TODO: Fix html pages and links -->
+   <!-- TODO: Fix image height to match login page -->
    <!---------------------------------------------------------------------------------------------->
    <main class="my-0 p-0">
       <div class="row w-100 vh-100 m-0">
          <div class="col-md-6 d-flex align-items-center">
-            <div class="p-4 w-100" style="margin-top: 60px !important;">
+            <div class="p-4 w-100 register-margin-one">
                <h2>Sign up - Get 5 credits for <span class="text-primary">FREE</span></h2>
 
                <!-- flash message -->
@@ -147,9 +119,9 @@
             </div>
          </div>
 
-         <!-- ? : Fix height to match login page -->
+         <!-- ! : Fix height to match login page -->
          <div class="col-md-6 bg-light d-flex align-items-center">
-            <img class="w-100" src="../static/livingroom3.png">
+            <img class="w-100" src="../static/img/livingroom3.png">
          </div>
       </div>
    </main>
@@ -165,17 +137,25 @@
 
    <!---------------------------------------------------------------------------------------------->
    <!-- Javascript -->
-   <!-- ? : Not on page not sure if you need links or not on here -->
    <!---------------------------------------------------------------------------------------------->
 
-   <!-- <script src="../static/script.js"></script> -->
+   <!-- * Bootstrap Bundle with Popper -->
+   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+   integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+   crossorigin="anonymous"></script>
 
-   <!-- <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script> -->
+   <!-- * Navbar toggler -->
+   <script>
+   function openNavbar() {
+      var button = document.querySelector('.navbar-toggler');
+      //Trigger a click event
+      button.click();
+   }
 
-   <!-- * Option 1: Bootstrap Bundle with Popper -->
-   <!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
-      integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
-      crossorigin="anonymous"></script> -->
+   document.addEventListener("DOMContentLoaded", function () {
+      openNavbar();
+   });
+ </script>
 
 </body>
 

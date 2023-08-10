@@ -11,61 +11,26 @@
 
   <!---------------------------------------------------------------------------------------------->
   <!-- CSS -->
-  <!-- TODO: Refactor CSS -->
   <!---------------------------------------------------------------------------------------------->
-
-  <!-- * Bootstrap CSS -->
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
-    integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-
-  <link data-turbo-track="reload" rel="stylesheet" href="../static/bootstrap-icons.css">
-
-  <!-- * Inline CSS -->
-  <style type="text/css" id="tts-styles">
-    [data-tts-block-id].tts-active {
-      background: rgba(206, 225, 255, 0.9) !important;
-    }
-
-    [data-tts-sentence-id].tts-active {
-      background: rgba(0, 89, 191, 0.7) !important;
-    }
-
-    .image-popup-link {
-      cursor: revert;
-    }
-
-    btn {
-      color: #b73bed;
-    }
-  </style>
-
-  <!-- ? NOT SURE of CSS Link -->
-  <link rel="stylesheet"
-    href="../static/application-9aee6fc370ad0735fa57b3716443db63a17d820a370441d01f767a2b5ca9f999.css">
-
-  <!-- ? NOT SURE of CSS Link -->
-  <link
-    href="data:text/css,%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20ddg-runtime-checks%20%7B%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20display%3A%20none%3B%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7D%0A%20%20%20%20%20%20%20%20%20%20%20%20"
-    rel="stylesheet" type="text/css">
+  <link rel="stylesheet" href="../static/css/main.css" data-turbo-track="reload">
+  <link rel="stylesheet" href="../static/css/custom.css">
 
 </head>
 
 <body>
   <!---------------------------------------------------------------------------------------------->
   <!-- Navigation Bar -->
-  <!-- TODO: Fix html pages and links -->
   <!---------------------------------------------------------------------------------------------->
   <header>
     <nav class="navbar navbar-light nav-site navbar-expand-md fixed-top navigation-clean">
       <div class="container position-relative">
+
         <a href="/">
-          <img style="width: 48px;padding-right: 10px;" src="../static/logo3.png">
+          <img class="nav-bar-style" src="../static/img/logo3.png">
         </a>
 
-        <a class="navbar-brand d-md-none d-lg-block fs-4 fancy-font" href="/" style="letter-spacing: 1px;"
-          translate="no">Design<span class="text-primary">AI</span><!-- ? Dont see html page for this -->
+        <a class="navbar-brand d-md-none d-lg-block fs-4 fancy-font spacing" href="/" translate="no">Design<span class="text-primary">AI</span>
         </a>
-
 
         <button data-bs-toggle="collapse" class="navbar-toggler" data-bs-target="#navcol-1">
           <span class="visually-hidden">Toggle navigation</span>
@@ -78,11 +43,11 @@
               <a class="nav-link text-uppercase " href="/">Home</a>
             </li>
             <li class="nav-item" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Pricing">
-              <a class="nav-link text-uppercase " href="/subscription">Pricing</a><!-- ? Dont see html page for this -->
+              <a class="nav-link text-uppercase " href="/subscription">Pricing</a>
             </li>
             <li class="nav-item" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Blog">
               <a class="nav-link text-uppercase " href="#about" ,="" data-turbo="false"
-                {}="">Blog</a><!-- ? Dont see html page for this -->
+                {}="">Blog</a>
             </li>
             <li class="nav-item" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Sign up">
               <a class="nav-link text-uppercase active" href="/register" ,="" data-turbo="false" {}="">Sign up</a>
@@ -98,8 +63,7 @@
 
   <!---------------------------------------------------------------------------------------------->
   <!-- Main Section -->
-  <!-- TODO: Fix html pages and links -->
-  <!-- TODO: Get rid of commented out code not needed -->
+  <!-- TODO: Check to see if commented out code needs to stay -->
   <!---------------------------------------------------------------------------------------------->
   <main>
     <!-- ? NOT SURE of COMMENT: <div class="bg-dark text-white text-center p-4 fs-4">Black Friday / Cyber Monday - <span class="fw-bolder">BLKCYB2250</span> - 50% Off any subscription</div> -->
@@ -108,7 +72,7 @@
 
         <div class="col-lg-6">
           <!-- ? NOT SURE of COMMENT: img class="w-100 shadow-lg" src="/static/hero-abstract-a81be02768e806c447ea60274b2f3079f159d77fef9cd6b093ded39ba23bb943.webp"-->
-          <img class="w-100 shadow-lg" style="padding: 25px" src="../static/bedroom2.png">
+          <img class="w-100 shadow-lg index-padding-one" src="../static/img/bedroom2.png">
         </div>
 
         <div class="col-lg-6 p-4">
@@ -129,7 +93,7 @@
 
           <div class="col-lg-4">
             <div class="card position-relative px-0 pt-2 px-1">
-              <img class="w-100" src="../static/bedroom.png">
+              <img class="w-100" src="../static/img/bedroom.png">
               <div class="card-body">
                 <h5 class="card-title">Instantly remodel your bedroom...</h5>
                 <p class="card-text">Boho Style!</p>
@@ -139,7 +103,7 @@
 
           <div class="col-lg-4">
             <div class="card position-relative px-0 bg-dark text-white pt-2 px-1">
-              <img class="w-100" src="../static/kitchen2.png">
+              <img class="w-100" src="../static/img/kitchen2.png">
               <div class="card-body">
                 <h5 class="card-title">Instantly remodel your kitchen/dining area...</h5>
                 <p class="card-text">Industrial Style!</p>
@@ -149,7 +113,7 @@
 
           <div class="col-lg-4">
             <div class="card position-relative px-0 pt-2 px-1">
-              <img class="w-100" src="../static/restroom2.png">
+              <img class="w-100" src="../static/img/restroom2.png">
               <div class="card-body">
                 <h5 class="card-title">Instantly remodel your restroom...</h5>
                 <p class="card-text">Modern Style!</p>
@@ -160,7 +124,6 @@
         </div>
       </div>
     </section>
-
 
     <section class="bg-dark py-4">
       <div class="container py-4">
@@ -177,8 +140,8 @@
 
           <div class="col-lg-6">
             <p id="before-tag">Before</p>
-            <img style="padding: 25px;" width="100%" class="device mt-4" id="image-to-shuffle"
-              src="../static/bedroom4.png" alt="Image">
+            <img width="100%" class="device mt-4 index-padding-one" id="image-to-shuffle"
+              src="../static/img/bedroom4.png" alt="Image">
             <p id="after-tag">After</p>
             <!-- ? NOT SURE of COMMENT: video style="border: 0;" width="100%" class="device mt-4" autoplay="" loop="" playsinline="" muted="" src=""></video-->
           </div>
@@ -191,8 +154,8 @@
       <div class="container py-4">
         <h2 class="display-5 fw-light w-100 text-center mb-4 py-5 text-secondary">Gallery of latest inspiration...</h2>
         <div id="image-to-shuffle" class="row d-flex justify-content-center align-items-center">
-          <img style="padding: 25px;" width="100%" class="device mt-4" id="image-to-shuffle"
-            src="../static/bedroom3.png" alt="Image">
+          <img width="100%" class="device mt-4 index-padding-one" id="image-to-shuffle"
+            src="../static/img/bedroom3.png" alt="Image">
         </div>
       </div>
     </section>
@@ -211,20 +174,18 @@
   <!-- Javascript -->
   <!-- TODO: Refactor JavaScript remove inline scripting -->
   <!---------------------------------------------------------------------------------------------->
-  <script
-    src="../static/es-module-shims.min-c346276ff4a25707638039561b6d3bdddccedaca54f9aa5c24e1625404c36b6b.js.download"
-    async="async" data-turbo-track="reload"></script>
-  <script type="module" import="application"></script>
-
-  <!-- * Option 1: Bootstrap Bundle with Popper -->
+  
+  <!-- * Bootstrap Bundle with Popper -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
     integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
     crossorigin="anonymous"></script>
 
-  <script src="../static/script.js"></script>
+  <!--? Not sure script is needed -->
+  <!-- <script src="../static/js/script.js"></script> -->
 
   <!-- * Inline JavaScript -->
-  <script>
+  <!--!: Issue with script causing error on web also inline script dont want inline -->
+  <!--<script>
     $(document).ready(function () {
       var images = ["/static/front.png", "/static/front2.png", "/static/bath.png", "/static/bath2.png", "/static/backyard.png", "static/back2.png", "static/streetview.png", "static/streetview2.png"];
       var beforeTags = ["Before 1", "Before 2", "Before 3", "Before 4"];
@@ -240,8 +201,9 @@
         index++;
       }, 2000); // * change image every 2 seconds
     });
-  </script>
+  </script>-->
 
+  <!-- * Navbar toggler -->
   <script>
     function openNavbar() {
       var button = document.querySelector('.navbar-toggler');
@@ -255,5 +217,4 @@
   </script>
 
 </body>
-
 </html>
