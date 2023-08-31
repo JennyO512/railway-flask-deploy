@@ -34,7 +34,7 @@ def load_user(user_id):
     conn = psycopg2.connect(connection_string)
     cur = conn.cursor()
 
-    cur.execute("SELECT * FROM user WHERE id = id", (user_id,))
+    cur.execute("SELECT * FROM users WHERE id = id", (user_id,))
     user_data = cur.fetchone()
 
     conn.close()
@@ -104,7 +104,7 @@ def dashboard():
     cur = conn.cursor()
 
     # Fetch the user's credits from the database
-    cur.execute("SELECT total_credits, used_credits FROM user WHERE email = %s", (current_user.email,))
+    cur.execute("SELECT total_credits, used_credits FROM users WHERE email = %s", (current_user.email,))
     result = cur.fetchone()
     print(f"Database query result: {result}")  # Debugging print statement
 
@@ -154,7 +154,7 @@ def dashboard():
     cur = conn.cursor()
 
     # Fetch the user's credits from the database
-    cur.execute("SELECT total_credits, used_credits FROM user WHERE id = %s", (current_user.id,))
+    cur.execute("SELECT total_credits, used_credits FROM users WHERE id = %s", (current_user.id,))
     total_credits, used_credits = cur.fetchone()
 
     #print the query to see if anything comes up
@@ -253,7 +253,7 @@ def subscribe():
             conn = psycopg2.connect(connection_string)
             cur = conn.cursor()
 
-            cur.execute("UPDATE user SET total_credits = total_credits + %s WHERE email = %s", (total_credits, email))
+            cur.execute("UPDATE users SET total_credits = total_credits + %s WHERE email = %s", (total_credits, email))
 
             conn.commit()
             conn.close()
@@ -282,10 +282,10 @@ def subscribe():
 
         # Depending on the plan, set the price ID and credit allocation
         if plan == 'premium':
-            price_id = 'prod_Nvp3GfvoJl1LiD'
+            price_id = 'price_1N9xPOKc5T0FpXgLbAz5hVQO'
             total_credits = 50
         else:
-            price_id = 'prod_Nvp2Sttg35Wp87'
+            price_id = 'price_1N9xONKc5T0FpXgLZ5BpjDr8'
             total_credits = 20
 
         # Create a subscription for the customer with your product
@@ -310,7 +310,7 @@ def subscribe():
             if user_data:
                 user = User(*user_data)
                 # Update the user's total credits in your database
-                cur.execute("UPDATE user SET total_credits = total_credits + %s WHERE email = %s", (total_credits, email))
+                cur.execute("UPDATE users SET total_credits = total_credits + %s WHERE email = %s", (total_credits, email))
 
                 conn.commit()
                 conn.close()
@@ -369,7 +369,7 @@ def register():
                 conn.close()
 
                 # Fetch the user from the database
-                cur.execute("SELECT * FROM user WHERE email = %s;", (email,))
+                cur.execute("SELECT * FROM users WHERE email = %s;", (email,))
                 user_data = cur.fetchone()
 
                 if user_data:
@@ -402,7 +402,7 @@ def login():
         conn = psycopg2.connect(connection_string)
         cur = conn.cursor()
 
-        cur.execute("SELECT * FROM user WHERE email = %s;", (email,))
+        cur.execute("SELECT * FROM users WHERE email = %s;", (email,))
         user_data = cur.fetchone()
 
         if user_data:
@@ -431,7 +431,7 @@ def update_credits():
     # Update the user's credits
     cur.execute(
         sql.SQL(
-            "UPDATE user SET total_credits = total_credits + 5 WHERE email = %s"
+            "UPDATE users SET total_credits = total_credits + 5 WHERE email = %s"
         ),
         [current_user.email]
     )
@@ -459,7 +459,7 @@ def add_credit():
         # Update the user's credits
         cur.execute(
             sql.SQL(
-                "UPDATE user SET total_credits = total_credits + 5 WHERE email = %s"
+                "UPDATE users SET total_credits = total_credits + 5 WHERE email = %s"
             ),
             [current_user.email]
         )
@@ -509,7 +509,7 @@ def stripe_webhook():
         cur = conn.cursor()
 
         # Fetch the user from the database
-        cur.execute("SELECT * FROM user WHERE email = %s", (customer_email,))
+        cur.execute("SELECT * FROM users WHERE email = %s", (customer_email,))
         user_data = cur.fetchone()
 
         if user_data:
@@ -521,7 +521,7 @@ def stripe_webhook():
                 user.total_credits += 20
 
             # Update the user's credits in the database
-            cur.execute("UPDATE user SET total_credits = %s WHERE email = %s", (user.total_credits, customer_email))
+            cur.execute("UPDATE users SET total_credits = %s WHERE email = %s", (user.total_credits, customer_email))
             conn.commit()
             print('User credits updated successfully')
 
