@@ -16,6 +16,19 @@ app = Flask(__name__)
 app.config['SECRET_KEY'] = 'super_secret_key'
 app.config['STRIPE_WEBHOOK_SECRET'] = 'STRIPE_WEBHOOK_SECRET'
 
+
+
+###############################################################################
+########################### X-Frame-Options for Vulnerabilities ###############
+###############################################################################
+@app.after_request
+def apply_x_frame_options(response):
+    response.headers["X-Frame-Options"] = "SAMEORIGIN"
+    return response
+
+
+
+
 # Create an intense of the LoginManager class
 login_manager = LoginManager()
 login_manager.init_app(app)
