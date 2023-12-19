@@ -3,6 +3,7 @@ Flask-Uploads
 Flask-WTF
 Flask
 Flask-SQLAlchemy
+SQLAlchemy
 Flask-Login
 Flask-LoginManager
 Flask-Jsonpify
